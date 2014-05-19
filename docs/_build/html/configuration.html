@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Configuration File (config.cfg) &mdash; Config Replicator 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Config Replicator 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Debugging" href="debugging.html" />
+    <link rel="prev" title="Report Files" href="reports.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="debugging.html" title="Debugging"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="reports.html" title="Report Files"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Config Replicator 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="configuration-file-config-cfg">
+<h1>Configuration File (config.cfg)<a class="headerlink" href="#configuration-file-config-cfg" title="Permalink to this headline">¶</a></h1>
+<p>There is a configuration file used to fine tune the program and to change some options it is used by the text and GUI version of the program,
+this configuration file is conformed by 6 sections that are described below:</p>
+<div class="section" id="enable-section">
+<h2>[enable] Section<a class="headerlink" href="#enable-section" title="Permalink to this headline">¶</a></h2>
+<p>On this section you could configure tell the config replicator to wait for the enable password in the connection flow:</p>
+<ul class="simple">
+<li><strong>enable:</strong> This parameter is used to use enable on the connection flow take the values &#8216;yes&#8217; or &#8216;no&#8217;</li>
+<li><strong>enable_command:</strong> This parameter is used to specify the enable command to send to the devices</li>
+</ul>
+</div>
+<div class="section" id="prompts-section">
+<h2>[prompts] Section<a class="headerlink" href="#prompts-section" title="Permalink to this headline">¶</a></h2>
+<p>On this section you could configure the different prompts that the program should match in order to proceed sending commands,
+each parameter is discussed in detail below:</p>
+<ul class="simple">
+<li><strong>username_prompts:</strong> This parameter is used to match the username prompts when connecting to a device via telnet, it accepts a list of REGEX prompts enclosed in a single quotes and separated by comma</li>
+<li><strong>password_prompts:</strong> This parameter is used to match the password prompts when connecting to a device via telnet, it accepts a list of REGEX prompts enclosed in a single quotes and separated by comma</li>
+<li><strong>telnet_device_prompts:</strong> This parameter is used to match the device prompt when connecting to a device via telnet, it accepts a list of REGEX prompts enclosed in a single quotes and separated by comma</li>
+<li><strong>ssh_device_prompt:</strong> This parameter is used to match the device prompts when connecting to a device via ssh, it only accept a single value</li>
+<li><strong>telnet_device_enable_prompts:</strong> This parameter is used to match the enable prompts when connecting to a device via telnet, it accepts a list of REGEX prompts enclosed in a single quotes and separated by comma</li>
+<li><strong>ssh_device_enable_prompt:</strong> This parameter is used to match the device enable prompt when connecting to a device via ssh, it only accept a single value</li>
+</ul>
+</div>
+<div class="section" id="errors-section">
+<h2>[errors] Section<a class="headerlink" href="#errors-section" title="Permalink to this headline">¶</a></h2>
+<p>On this section you could configure the different errors that you could find when sending the commands to the device, each
+time that a command is send to a device via telnet or ssh the program checks the output with this list, if a match is found
+then an error is registered, the connection is considered successful but an error in the connection is raised.</p>
+<ul class="simple">
+<li><strong>error:</strong> This parameter is used to match the errors when sending commands to a device via any method, it accepts a list of REGEX errors enclosed in a single quotes and separated by comma</li>
+</ul>
+</div>
+<div class="section" id="output-section">
+<h2>[output] Section<a class="headerlink" href="#output-section" title="Permalink to this headline">¶</a></h2>
+<p>On this section you could configure the different commands to send before and after the commands on a script file with the !output directive,
+this commands should prevent the stop of the output to wait for an user input.</p>
+<ul class="simple">
+<li><strong>no_stop:</strong> This parameter is used to configure the command to send to prevent the output setup to wait for a user input, i.e: In Cisco should be &#8220;terminal length 0&#8221;</li>
+<li><strong>default_stop:</strong> This parameter is used to configure the command to send to cancel the previous command, i.e: In Cisco should be &#8220;terminal no length&#8221; or &#8220;terminal length 32&#8221;</li>
+</ul>
+</div>
+<div class="section" id="telnet-section">
+<h2>[telnet] Section<a class="headerlink" href="#telnet-section" title="Permalink to this headline">¶</a></h2>
+<p>On this section you could configure the different parameters for the telnet connections.</p>
+<ul class="simple">
+<li><strong>timeout:</strong> This parameter is used to configure the timeout value for the telnet connections and to wait for the prompt after sending a command, it is recommended not to configure a low value, because could lead to undesirable results, the minimum recommended value is 5 seconds.</li>
+</ul>
+</div>
+<div class="section" id="ssh-section">
+<h2>[ssh] Section<a class="headerlink" href="#ssh-section" title="Permalink to this headline">¶</a></h2>
+<p>On this section you could configure the different parameters for the ssh connections.</p>
+<ul class="simple">
+<li><strong>timeout:</strong> This parameter is used to configure the timeout for the ssh connections only</li>
+</ul>
+</div>
+<div class="section" id="menus-section">
+<h2>[menus] Section<a class="headerlink" href="#menus-section" title="Permalink to this headline">¶</a></h2>
+<p>On this section you could configure the different parameters for the Script and Destination List Menus, this parameters are not used by the gui version.</p>
+<ul class="simple">
+<li><strong>len_page:</strong> Specify the length of each page of the menu, ie. if 3 is specified only 3 items per page will be shown</li>
+<li><strong>title:</strong> Title of the Menu, it is always rendered on the menu</li>
+<li><strong>subtitle:</strong> Subtitle of the menu, it is a field below the title, if none is specified is not rendered</li>
+<li><strong>prompt:</strong> Prompt shown for user input</li>
+<li><strong>col_number:</strong> Number of columns to reserve for the number column of the menu</li>
+<li><strong>col_item:</strong> Number of columns to reserve for the item column of the menu (Scripts name or lists name)</li>
+<li><strong>col_desc:</strong> Number of columns to reserve for the description column of the menu</li>
+</ul>
+</div>
+<div class="section" id="progress-section">
+<h2>[progress] Section<a class="headerlink" href="#progress-section" title="Permalink to this headline">¶</a></h2>
+<p>Config Replicator print the progress of the connections every &#8220;interval&#8221; seconds, this parameters are not used by the gui version.</p>
+<ul class="simple">
+<li><strong>interval:</strong> Number of seconds before printing the progress of teh connection</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Configuration File (config.cfg)</a><ul>
+<li><a class="reference internal" href="#enable-section">[enable] Section</a></li>
+<li><a class="reference internal" href="#prompts-section">[prompts] Section</a></li>
+<li><a class="reference internal" href="#errors-section">[errors] Section</a></li>
+<li><a class="reference internal" href="#output-section">[output] Section</a></li>
+<li><a class="reference internal" href="#telnet-section">[telnet] Section</a></li>
+<li><a class="reference internal" href="#ssh-section">[ssh] Section</a></li>
+<li><a class="reference internal" href="#menus-section">[menus] Section</a></li>
+<li><a class="reference internal" href="#progress-section">[progress] Section</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="reports.html"
+                        title="previous chapter">Report Files</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="debugging.html"
+                        title="next chapter">Debugging</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/configuration.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="debugging.html" title="Debugging"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="reports.html" title="Report Files"
+             >previous</a> |</li>
+        <li><a href="index.html">Config Replicator 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Miguel Ercolino.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

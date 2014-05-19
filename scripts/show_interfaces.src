@@ -1,0 +1,7 @@
+!Desc: Script to get the interface summary
+!output
+!
+sh ip interface brief
+!
+show interface FastEthernet 0/0
+!

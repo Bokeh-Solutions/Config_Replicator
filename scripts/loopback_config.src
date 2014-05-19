@@ -1,0 +1,18 @@
+!DESC: Configure loopback interfaces
+
+! 
+configure terminal
+!
+interface loopback 10
+ip address 10.10.10.1 255.255.255.0
+no shutdown
+!
+interface loopback 11
+ip address 11.11.11.1 255.255.255.0
+no shutdown
+!
+exit
+exit
+!
+wr
+!

@@ -1,0 +1,606 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Classes and Functions Documentation &mdash; Config Replicator 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Config Replicator 1.0.0 documentation" href="index.html" />
+    <link rel="prev" title="How to Make an Executable for your platform" href="executable.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="executable.html" title="How to Make an Executable for your platform"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Config Replicator 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-config_replicator">
+<span id="classes-and-functions-documentation"></span><h1>Classes and Functions Documentation<a class="headerlink" href="#module-config_replicator" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="config_replicator.clear">
+<tt class="descclassname">config_replicator.</tt><tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#config_replicator.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to Clear the terminal window, it should work on linux and windows</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="config_replicator.help_arg">
+<tt class="descclassname">config_replicator.</tt><tt class="descname">help_arg</tt><big>(</big><big>)</big><a class="headerlink" href="#config_replicator.help_arg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to print help</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="config_replicator.welcome">
+<tt class="descclassname">config_replicator.</tt><tt class="descname">welcome</tt><big>(</big><big>)</big><a class="headerlink" href="#config_replicator.welcome" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to print the Welcome Screen</p>
+</dd></dl>
+
+<span class="target" id="module-libs.connection"></span><dl class="class">
+<dt id="libs.connection.Connection">
+<em class="property">class </em><tt class="descclassname">libs.connection.</tt><tt class="descname">Connection</tt><big>(</big><em>q_dest</em>, <em>q_error</em>, <em>q_out</em>, <em>q_succ</em>, <em>user</em>, <em>pwd</em>, <em>en_pwd</em>, <em>cmd</em>, <em>out</em>, <em>dbg</em>, <em>logger</em>, <em>handler</em><big>)</big><a class="headerlink" href="#libs.connection.Connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for Multithreading to connect to the devices</p>
+<p>Arguments:</p>
+<p>q_dest = Destination Queue</p>
+<p>q_error = Error Queue</p>
+<p>q_out = Output Queue</p>
+<p>q_succ = Successful Connection Queue</p>
+<p>user = username to login to the devices</p>
+<p>pwd = password to login to the devices</p>
+<p>en_pwd = enable password</p>
+<p>cmd = List with the commands to send to the devices</p>
+<p>out = Boolean to express that the scripts need an output report</p>
+<p>dbg = Boolean to know if Debug is on</p>
+<p>logger = Logging object</p>
+<p>handler = handler to output debug to file</p>
+<dl class="method">
+<dt id="libs.connection.Connection.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#libs.connection.Connection.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connection Function</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-libs.output_report"></span><dl class="class">
+<dt id="libs.output_report.OutputReport">
+<em class="property">class </em><tt class="descclassname">libs.output_report.</tt><tt class="descname">OutputReport</tt><big>(</big><em>q_dest</em>, <em>q_out</em>, <em>script</em>, <em>lst</em><big>)</big><a class="headerlink" href="#libs.output_report.OutputReport" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for Multithreading to generate the Output Report for scripts with the directive !output</p>
+<p>Arguments:</p>
+<p>q_dest = Destination Queue</p>
+<p>q_out = Output Queue</p>
+<p>script = Response of the Script Menu</p>
+<p>lst = Response of the list Menu</p>
+<dl class="method">
+<dt id="libs.output_report.OutputReport.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#libs.output_report.OutputReport.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output report function</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-libs.summary_report"></span><dl class="function">
+<dt id="libs.summary_report.summary_report">
+<tt class="descclassname">libs.summary_report.</tt><tt class="descname">summary_report</tt><big>(</big><em>init_time</em>, <em>fin_time</em>, <em>user</em>, <em>script</em>, <em>lst</em>, <em>thr</em>, <em>tot_dev</em>, <em>q_err</em>, <em>q_succ</em><big>)</big><a class="headerlink" href="#libs.summary_report.summary_report" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to save the summary Report</p>
+<p>Arguments:</p>
+<p>init_time = Time when the script begun</p>
+<p>fin_time = Ending time of the script</p>
+<p>user = username used to connect to the devices</p>
+<p>script = Response of the Script Menu</p>
+<p>lst = Response of the list Menu</p>
+<p>thr = Number of threads spawned</p>
+<p>tot_dev = Total Number of devices processed</p>
+<p>q_err = Error queue</p>
+<p>q_succ = Successful Connection Queue</p>
+</dd></dl>
+
+<span class="target" id="module-libs.progress"></span><dl class="class">
+<dt id="libs.progress.Progress">
+<em class="property">class </em><tt class="descclassname">libs.progress.</tt><tt class="descname">Progress</tt><big>(</big><em>q_dest</em>, <em>tot_dev</em>, <em>logger</em><big>)</big><a class="headerlink" href="#libs.progress.Progress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for Multithreading to print the progress of the connections</p>
+<p>Arguments:</p>
+<p>q_dest = Destination Queue</p>
+<p>tot_dev = Total Number of devices processed</p>
+<p>logger = Logging object</p>
+<dl class="method">
+<dt id="libs.progress.Progress.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#libs.progress.Progress.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Progress printing function</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-libs.menu"></span><p>This Module it is used to create well formatted and flexible text menus.</p>
+<dl class="class">
+<dt id="libs.menu.Menu">
+<em class="property">class </em><tt class="descclassname">libs.menu.</tt><tt class="descname">Menu</tt><a class="headerlink" href="#libs.menu.Menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class Menu it is the only class and it is used to create the simple text menus, it is modifiable through some
+arguments and could also handle the loop for the selection returning a tuple with the selected item</p>
+<p>Methods</p>
+<p>change_cols: Used to change the reserved columns for each field on the menu</p>
+<p>add_item: Used to add items to the menu</p>
+<p>print_page: Used to print an specific page of the menu</p>
+<p>__clear: Used to clear the terminal window, it depends on OS to issue clear or cls it should be work on windows and linux</p>
+<p>__previous_page: Used to navigate to a previous menu page</p>
+<p>__next_page: Used to navigate to the nex menu page</p>
+<p>loop: used to get the user input through a loop</p>
+<dl class="method">
+<dt id="libs.menu.Menu.add_item">
+<tt class="descname">add_item</tt><big>(</big><em>item</em>, <em>desc</em><big>)</big><a class="headerlink" href="#libs.menu.Menu.add_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method used to add items to the Menu</p>
+<p>Parameters</p>
+<p>item: Item name</p>
+<p>desc: Description of the item</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="libs.menu.Menu.change_cols">
+<tt class="descname">change_cols</tt><big>(</big><em>num</em>, <em>item</em>, <em>desc</em><big>)</big><a class="headerlink" href="#libs.menu.Menu.change_cols" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to change the reserved columns for watch field in the menu</p>
+<p>Parameters</p>
+<p>num: Columns used for the number field in the menu</p>
+<p>item: Columns used for the item field in the menu</p>
+<p>desc: Columns used for the description field in the menu</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="libs.menu.Menu.loop">
+<tt class="descname">loop</tt><big>(</big><big>)</big><a class="headerlink" href="#libs.menu.Menu.loop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to enter in a loop for the user input</p>
+<p>Returns</p>
+<p>Returns a tuple with the format (item_number, item_name, item_description) of the selected option</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="libs.menu.Menu.print_page">
+<tt class="descname">print_page</tt><big>(</big><em>page</em><big>)</big><a class="headerlink" href="#libs.menu.Menu.print_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>It prints in a pre-established format the page of the menu</p>
+<p>Arguments</p>
+<p>page: Page number to print</p>
+<p>Navigation Keys</p>
+<p>n: next page
+p: previous page
+q: quit</p>
+<p>Notes</p>
+<p>The format establishes the print of the Title first, the subtitle second it it exists, the items to fill one page
+and regulated by the len_page parameter, at the end prints the instructions to navigate also with the indication
+on which page you are, there are lines that delimits the diferent fields, if a menu has more pages the top and
+bottom boundaries could change from &#8220;solid&#8221; lines to &#8220;arrows&#8221; to indicate that there are more items on previous
+or following pages.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-config_replicator_gui"></span><dl class="function">
+<dt id="config_replicator_gui.bin">
+<tt class="descclassname">config_replicator_gui.</tt><tt class="descname">bin</tt><big>(</big><em>QTextStream</em><big>)</big> &rarr; QTextStream<a class="headerlink" href="#config_replicator_gui.bin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="config_replicator_gui.configReplicator">
+<em class="property">class </em><tt class="descclassname">config_replicator_gui.</tt><tt class="descname">configReplicator</tt><big>(</big><em>parent=None</em><big>)</big><a class="headerlink" href="#config_replicator_gui.configReplicator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main Window Class</p>
+<dl class="method">
+<dt id="config_replicator_gui.configReplicator.getCommands">
+<tt class="descname">getCommands</tt><big>(</big><em>fname</em><big>)</big><a class="headerlink" href="#config_replicator_gui.configReplicator.getCommands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to process the commands on the script</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="config_replicator_gui.configReplicator.getDevices">
+<tt class="descname">getDevices</tt><big>(</big><em>fname</em><big>)</big><a class="headerlink" href="#config_replicator_gui.configReplicator.getDevices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to process the destination list</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="config_replicator_gui.configReplicator.get_credentials">
+<tt class="descname">get_credentials</tt><big>(</big><em>user</em>, <em>pwd</em><big>)</big><a class="headerlink" href="#config_replicator_gui.configReplicator.get_credentials" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to save the credentials entered</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="config_replicator_gui.configReplicator.get_enable">
+<tt class="descname">get_enable</tt><big>(</big><em>en</em><big>)</big><a class="headerlink" href="#config_replicator_gui.configReplicator.get_enable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to save the enable password entered</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="config_replicator_gui.configReplicator.on_actionClear_triggered">
+<tt class="descname">on_actionClear_triggered</tt><big>(</big><big>)</big><a class="headerlink" href="#config_replicator_gui.configReplicator.on_actionClear_triggered" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to run when the Clear Button in the toolbar is pressed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="config_replicator_gui.configReplicator.on_actionConnect_triggered">
+<tt class="descname">on_actionConnect_triggered</tt><big>(</big><big>)</big><a class="headerlink" href="#config_replicator_gui.configReplicator.on_actionConnect_triggered" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to run when the Connect button on the toolbar is pressed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="config_replicator_gui.configReplicator.on_actionHelp_triggered">
+<tt class="descname">on_actionHelp_triggered</tt><big>(</big><big>)</big><a class="headerlink" href="#config_replicator_gui.configReplicator.on_actionHelp_triggered" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to run when the Help button on the toolbar is pressed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="config_replicator_gui.configReplicator.on_actionReports_triggered">
+<tt class="descname">on_actionReports_triggered</tt><big>(</big><big>)</big><a class="headerlink" href="#config_replicator_gui.configReplicator.on_actionReports_triggered" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to run when the Reports button on the toolbar is pressed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="config_replicator_gui.configReplicator.on_actionSettings_triggered">
+<tt class="descname">on_actionSettings_triggered</tt><big>(</big><big>)</big><a class="headerlink" href="#config_replicator_gui.configReplicator.on_actionSettings_triggered" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to run when the Settings button on the toolbar is pressed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="config_replicator_gui.configReplicator.on_listPushButton_clicked">
+<tt class="descname">on_listPushButton_clicked</tt><big>(</big><big>)</big><a class="headerlink" href="#config_replicator_gui.configReplicator.on_listPushButton_clicked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to run when the Load Destination List is clicked</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="config_replicator_gui.configReplicator.on_listTextEdit_textChanged">
+<tt class="descname">on_listTextEdit_textChanged</tt><big>(</big><big>)</big><a class="headerlink" href="#config_replicator_gui.configReplicator.on_listTextEdit_textChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to run when the destination list is changed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="config_replicator_gui.configReplicator.on_saveListPushButton_clicked">
+<tt class="descname">on_saveListPushButton_clicked</tt><big>(</big><big>)</big><a class="headerlink" href="#config_replicator_gui.configReplicator.on_saveListPushButton_clicked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to run when the Save Destination List is clicked</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="config_replicator_gui.configReplicator.on_saveScriptPushButton_clicked">
+<tt class="descname">on_saveScriptPushButton_clicked</tt><big>(</big><big>)</big><a class="headerlink" href="#config_replicator_gui.configReplicator.on_saveScriptPushButton_clicked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to run when the Save Script is clicked</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="config_replicator_gui.configReplicator.on_scriptPushButton_clicked">
+<tt class="descname">on_scriptPushButton_clicked</tt><big>(</big><big>)</big><a class="headerlink" href="#config_replicator_gui.configReplicator.on_scriptPushButton_clicked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to run when the Load Script button is clicked</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="config_replicator_gui.configReplicator.on_scriptTextEdit_textChanged">
+<tt class="descname">on_scriptTextEdit_textChanged</tt><big>(</big><big>)</big><a class="headerlink" href="#config_replicator_gui.configReplicator.on_scriptTextEdit_textChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to run when the script is changed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="config_replicator_gui.configReplicator.updateUi">
+<tt class="descname">updateUi</tt><big>(</big><big>)</big><a class="headerlink" href="#config_replicator_gui.configReplicator.updateUi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to refresh the interface</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="config_replicator_gui.hex">
+<tt class="descclassname">config_replicator_gui.</tt><tt class="descname">hex</tt><big>(</big><em>QTextStream</em><big>)</big> &rarr; QTextStream<a class="headerlink" href="#config_replicator_gui.hex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="config_replicator_gui.oct">
+<tt class="descclassname">config_replicator_gui.</tt><tt class="descname">oct</tt><big>(</big><em>QTextStream</em><big>)</big> &rarr; QTextStream<a class="headerlink" href="#config_replicator_gui.oct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="config_replicator_gui.welcome">
+<tt class="descclassname">config_replicator_gui.</tt><tt class="descname">welcome</tt><big>(</big><big>)</big><a class="headerlink" href="#config_replicator_gui.welcome" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to print the Welcome Screen</p>
+</dd></dl>
+
+<span class="target" id="module-libs.connection_gui"></span><dl class="function">
+<dt id="libs.connection_gui.bin">
+<tt class="descclassname">libs.connection_gui.</tt><tt class="descname">bin</tt><big>(</big><em>QTextStream</em><big>)</big> &rarr; QTextStream<a class="headerlink" href="#libs.connection_gui.bin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="libs.connection_gui.connectDevices">
+<em class="property">class </em><tt class="descclassname">libs.connection_gui.</tt><tt class="descname">connectDevices</tt><big>(</big><em>q_dest</em>, <em>q_error</em>, <em>q_out</em>, <em>q_succ</em>, <em>user</em>, <em>pwd</em>, <em>en_pwd</em>, <em>cmd</em>, <em>out</em>, <em>parent=None</em><big>)</big><a class="headerlink" href="#libs.connection_gui.connectDevices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for Multithreading to connect to the devices</p>
+<p>Arguments:</p>
+<p>q_dest = Destination Queue</p>
+<p>q_error = Error Queue</p>
+<p>q_out = Output Queue</p>
+<p>q_succ = Successful Connection Queue</p>
+<p>user = username to login to the devices</p>
+<p>pwd = password to login to the devices</p>
+<p>en_pwd = enable password</p>
+<p>cmd = List with the commands to send to the devices</p>
+<p>out = Boolean to express that the scripts need an output report</p>
+<dl class="method">
+<dt id="libs.connection_gui.connectDevices.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#libs.connection_gui.connectDevices.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connection Function</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="libs.connection_gui.hex">
+<tt class="descclassname">libs.connection_gui.</tt><tt class="descname">hex</tt><big>(</big><em>QTextStream</em><big>)</big> &rarr; QTextStream<a class="headerlink" href="#libs.connection_gui.hex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libs.connection_gui.oct">
+<tt class="descclassname">libs.connection_gui.</tt><tt class="descname">oct</tt><big>(</big><em>QTextStream</em><big>)</big> &rarr; QTextStream<a class="headerlink" href="#libs.connection_gui.oct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<span class="target" id="module-libs.output_report_gui"></span><dl class="class">
+<dt id="libs.output_report_gui.OutputReport">
+<em class="property">class </em><tt class="descclassname">libs.output_report_gui.</tt><tt class="descname">OutputReport</tt><big>(</big><em>q_dest</em>, <em>q_out</em>, <em>script</em>, <em>lst</em>, <em>parent=None</em><big>)</big><a class="headerlink" href="#libs.output_report_gui.OutputReport" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for Multithreading to generate the Output Report for scripts with the directive !output</p>
+<p>Arguments:</p>
+<p>q_dest = Destination Queue</p>
+<p>q_out = Output Queue</p>
+<p>script = Response of the Script Menu</p>
+<p>lst = Response of the list Menu</p>
+<dl class="method">
+<dt id="libs.output_report_gui.OutputReport.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#libs.output_report_gui.OutputReport.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output report function</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="libs.output_report_gui.bin">
+<tt class="descclassname">libs.output_report_gui.</tt><tt class="descname">bin</tt><big>(</big><em>QTextStream</em><big>)</big> &rarr; QTextStream<a class="headerlink" href="#libs.output_report_gui.bin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libs.output_report_gui.hex">
+<tt class="descclassname">libs.output_report_gui.</tt><tt class="descname">hex</tt><big>(</big><em>QTextStream</em><big>)</big> &rarr; QTextStream<a class="headerlink" href="#libs.output_report_gui.hex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libs.output_report_gui.oct">
+<tt class="descclassname">libs.output_report_gui.</tt><tt class="descname">oct</tt><big>(</big><em>QTextStream</em><big>)</big> &rarr; QTextStream<a class="headerlink" href="#libs.output_report_gui.oct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<span class="target" id="module-libs.summary_report_gui"></span><dl class="function">
+<dt id="libs.summary_report_gui.summary_report">
+<tt class="descclassname">libs.summary_report_gui.</tt><tt class="descname">summary_report</tt><big>(</big><em>init_time</em>, <em>fin_time</em>, <em>user</em>, <em>script</em>, <em>lst</em>, <em>thr</em>, <em>tot_dev</em>, <em>q_err</em>, <em>q_succ</em><big>)</big><a class="headerlink" href="#libs.summary_report_gui.summary_report" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to save the summary Report</p>
+<p>Arguments:</p>
+<p>init_time = Time when the script begun</p>
+<p>fin_time = Ending time of the script</p>
+<p>user = username used to connect to the devices</p>
+<p>script = Response of the Script Menu</p>
+<p>lst = Response of the list Menu</p>
+<p>thr = Number of threads spawned</p>
+<p>tot_dev = Total Number of devices processed</p>
+<p>q_err = Error queue</p>
+<p>q_succ = Successful Connection Queue</p>
+</dd></dl>
+
+<span class="target" id="module-libs.misc_gui"></span><dl class="function">
+<dt id="libs.misc_gui.bin">
+<tt class="descclassname">libs.misc_gui.</tt><tt class="descname">bin</tt><big>(</big><em>QTextStream</em><big>)</big> &rarr; QTextStream<a class="headerlink" href="#libs.misc_gui.bin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="libs.misc_gui.credentialDlg">
+<em class="property">class </em><tt class="descclassname">libs.misc_gui.</tt><tt class="descname">credentialDlg</tt><big>(</big><em>parent=None</em><big>)</big><a class="headerlink" href="#libs.misc_gui.credentialDlg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to create the Credential dialog</p>
+<dl class="method">
+<dt id="libs.misc_gui.credentialDlg.on_buttonBox_accepted">
+<tt class="descname">on_buttonBox_accepted</tt><big>(</big><big>)</big><a class="headerlink" href="#libs.misc_gui.credentialDlg.on_buttonBox_accepted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to run when the Ok Button is clicked</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="libs.misc_gui.enableDlg">
+<em class="property">class </em><tt class="descclassname">libs.misc_gui.</tt><tt class="descname">enableDlg</tt><big>(</big><em>parent=None</em><big>)</big><a class="headerlink" href="#libs.misc_gui.enableDlg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to create the enable Dialog</p>
+<dl class="method">
+<dt id="libs.misc_gui.enableDlg.on_enableButtonBox_accepted">
+<tt class="descname">on_enableButtonBox_accepted</tt><big>(</big><big>)</big><a class="headerlink" href="#libs.misc_gui.enableDlg.on_enableButtonBox_accepted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to run when the Ok Button is clicked</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="libs.misc_gui.helpWindow">
+<em class="property">class </em><tt class="descclassname">libs.misc_gui.</tt><tt class="descname">helpWindow</tt><big>(</big><em>parent=None</em><big>)</big><a class="headerlink" href="#libs.misc_gui.helpWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to create the Help Window</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="libs.misc_gui.hex">
+<tt class="descclassname">libs.misc_gui.</tt><tt class="descname">hex</tt><big>(</big><em>QTextStream</em><big>)</big> &rarr; QTextStream<a class="headerlink" href="#libs.misc_gui.hex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libs.misc_gui.oct">
+<tt class="descclassname">libs.misc_gui.</tt><tt class="descname">oct</tt><big>(</big><em>QTextStream</em><big>)</big> &rarr; QTextStream<a class="headerlink" href="#libs.misc_gui.oct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="libs.misc_gui.reportsWindow">
+<em class="property">class </em><tt class="descclassname">libs.misc_gui.</tt><tt class="descname">reportsWindow</tt><big>(</big><em>summary_report_file=''</em>, <em>output_report_file=''</em>, <em>parent=None</em><big>)</big><a class="headerlink" href="#libs.misc_gui.reportsWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to create the Reports window</p>
+<p>Arguments:</p>
+<p>summary_report_file = Name of the created summary report</p>
+<p>output_report_file = Name of the output summary report</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="libs.misc_gui.settingsWindow">
+<em class="property">class </em><tt class="descclassname">libs.misc_gui.</tt><tt class="descname">settingsWindow</tt><big>(</big><em>parent=None</em><big>)</big><a class="headerlink" href="#libs.misc_gui.settingsWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to create the Settings window</p>
+<dl class="method">
+<dt id="libs.misc_gui.settingsWindow.on_actionSettingsEdit_triggered">
+<tt class="descname">on_actionSettingsEdit_triggered</tt><big>(</big><big>)</big><a class="headerlink" href="#libs.misc_gui.settingsWindow.on_actionSettingsEdit_triggered" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to run when the Edit button is pressed in the toolbar</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="libs.misc_gui.settingsWindow.on_actionSettingsSave_triggered">
+<tt class="descname">on_actionSettingsSave_triggered</tt><big>(</big><big>)</big><a class="headerlink" href="#libs.misc_gui.settingsWindow.on_actionSettingsSave_triggered" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to run when the Save button is pressed in the toolbar</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="libs.misc_gui.settingsWindow.on_settingsTextEdit_textChanged">
+<tt class="descname">on_settingsTextEdit_textChanged</tt><big>(</big><big>)</big><a class="headerlink" href="#libs.misc_gui.settingsWindow.on_settingsTextEdit_textChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to run when the text change</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-libs.monitoring_gui"></span><dl class="function">
+<dt id="libs.monitoring_gui.bin">
+<tt class="descclassname">libs.monitoring_gui.</tt><tt class="descname">bin</tt><big>(</big><em>QTextStream</em><big>)</big> &rarr; QTextStream<a class="headerlink" href="#libs.monitoring_gui.bin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="libs.monitoring_gui.hex">
+<tt class="descclassname">libs.monitoring_gui.</tt><tt class="descname">hex</tt><big>(</big><em>QTextStream</em><big>)</big> &rarr; QTextStream<a class="headerlink" href="#libs.monitoring_gui.hex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="libs.monitoring_gui.monitoringDlg">
+<em class="property">class </em><tt class="descclassname">libs.monitoring_gui.</tt><tt class="descname">monitoringDlg</tt><big>(</big><em>script</em>, <em>list</em>, <em>th_number</em>, <em>com_list</em>, <em>dest_list</em>, <em>user</em>, <em>pwd</em>, <em>en_pwd</em>, <em>out</em>, <em>parent=None</em><big>)</big><a class="headerlink" href="#libs.monitoring_gui.monitoringDlg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to create the Monitoring window</p>
+<p>Arguments:</p>
+<p>script = Name of the script used
+list = Name of the destination list used
+th_number = Number of threads used
+com_list = Command List created from the script
+dest_list = Destination list created from the file
+user = username to login into the devices
+pwd = password used to login into the devices
+en_pwd = Enable Password
+out = Boolean to know if there is output</p>
+<dl class="method">
+<dt id="libs.monitoring_gui.monitoringDlg.closeEvent">
+<tt class="descname">closeEvent</tt><big>(</big><em>evnt</em><big>)</big><a class="headerlink" href="#libs.monitoring_gui.monitoringDlg.closeEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to avoid to close the monitor window while running</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="libs.monitoring_gui.monitoringDlg.sendOutputReport">
+<tt class="descname">sendOutputReport</tt><big>(</big><em>out_report</em><big>)</big><a class="headerlink" href="#libs.monitoring_gui.monitoringDlg.sendOutputReport" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to send the signal with the name of the output report</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="libs.monitoring_gui.monitoringDlg.start_threads">
+<tt class="descname">start_threads</tt><big>(</big><big>)</big><a class="headerlink" href="#libs.monitoring_gui.monitoringDlg.start_threads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to start the Threads</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="libs.monitoring_gui.monitoringDlg.update_err_conn">
+<tt class="descname">update_err_conn</tt><big>(</big><big>)</big><a class="headerlink" href="#libs.monitoring_gui.monitoringDlg.update_err_conn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to run when a signal err conn arrives</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="libs.monitoring_gui.monitoringDlg.update_succ_conn">
+<tt class="descname">update_succ_conn</tt><big>(</big><big>)</big><a class="headerlink" href="#libs.monitoring_gui.monitoringDlg.update_succ_conn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to run when a signal succ conn arrives</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="libs.monitoring_gui.oct">
+<tt class="descclassname">libs.monitoring_gui.</tt><tt class="descname">oct</tt><big>(</big><em>QTextStream</em><big>)</big> &rarr; QTextStream<a class="headerlink" href="#libs.monitoring_gui.oct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<span class="target" id="module-ui.credentials"></span><span class="target" id="module-ui.enable"></span><span class="target" id="module-ui.helpbrowser"></span><span class="target" id="module-ui.mainwindow"></span><span class="target" id="module-ui.monitoring"></span><span class="target" id="module-ui.reports"></span><span class="target" id="module-ui.settingswindow"></span></div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="executable.html"
+                        title="previous chapter">How to Make an Executable for your platform</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/code.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="executable.html" title="How to Make an Executable for your platform"
+             >previous</a> |</li>
+        <li><a href="index.html">Config Replicator 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Miguel Ercolino.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

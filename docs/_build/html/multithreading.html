@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Multithreading and Queues &mdash; Config Replicator 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Config Replicator 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Scripts Files" href="scripts.html" />
+    <link rel="prev" title="Config Replicator GUI" href="gui.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="scripts.html" title="Scripts Files"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="gui.html" title="Config Replicator GUI"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Config Replicator 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="multithreading-and-queues">
+<h1>Multithreading and Queues<a class="headerlink" href="#multithreading-and-queues" title="Permalink to this headline">¶</a></h1>
+<p>Config Replicator uses multithreading to speed up three processes in the code, the first one is the connection flow to each device,
+the second one is the Output Report and the last one is the Progress Printing. The Summary Report is processed by the main program after the all the threads are finished.</p>
+<p>The task flow to the different threads are controlled by queues, there are 4 queues used:</p>
+<ul class="simple">
+<li><strong>Destination Queue:</strong> The destination queue is filled before spawning the connection threads, and it is filled with a tuple (ip_address, connection_mode), where connection mode could be a &#8220;telnet&#8221; or &#8220;ssh&#8221;</li>
+<li><strong>Error Queue:</strong> This queue is used to accumulate errors found trying to connect, authenticate or sending commands to the device, it is filled in the connection process and is a tuple of the form (ip_address, name_of_the_device, connection_mode, error_string)</li>
+<li><strong>Success Queue:</strong> This is a queue used to register when a successful connection is made, even if after there was any error sending commands, it is formed by a tuple (ip_address, name_of_the_address) and it is filled in the connection process</li>
+<li><strong>Output Queue:</strong> The Output access is used to save the output of the commands send when the directive !output is present on the script, it has a format (ip_address, name_of_the_device, Output) where Output is the output of all the commands send to the device.</li>
+</ul>
+<p>You could only specify the number of threads that should be spawned for the connection process and it is asked on the interactive section, the number of threads
+depends on many factors and it is wise to do some tests, to see how many threads your computer could handle, normally you could spawn 20 threads without any problem,
+but there are also some systems that could handle 100 threads without a glitch, so make your tests on your system.</p>
+<p>With the number of threads and the timeout of telnet and ssh found in the file &#8220;config.cfg&#8221; you could process a large quantity of devices in a short period of time,
+take into account that the larger the number of threads is more devices are processed at the same time, so if there is a problem with the configuration script more devices will be affected,
+also if your connection is slow and the timeouts are not set correctly you could find some undesirable results, so be conservative.</p>
+<p>For example if you could connect to a device but the authentication is managed by a server (tacacs or radius) and there is no reachability, then the timeout value for the authentication server could
+be high, and if the timeout configured on the configuration file is lower than the timeout on the server you will found always an error trying to authenticate to the device.</p>
+<p>On the contrary there is only one thread for the output process and for the progress printing, that means that an output write to the Output file each time that there is a task on the output queue and the output queue
+is filled by the connection process.</p>
+<p>The error queue is processed once all the threads finished to process the queues, and is processed sequentially to fill out the Summary Report.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="gui.html"
+                        title="previous chapter">Config Replicator GUI</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="scripts.html"
+                        title="next chapter">Scripts Files</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/multithreading.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="scripts.html" title="Scripts Files"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="gui.html" title="Config Replicator GUI"
+             >previous</a> |</li>
+        <li><a href="index.html">Config Replicator 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Miguel Ercolino.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

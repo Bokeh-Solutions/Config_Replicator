@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Report Files &mdash; Config Replicator 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Config Replicator 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Configuration File (config.cfg)" href="configuration.html" />
+    <link rel="prev" title="Destination List Files" href="lists.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="configuration.html" title="Configuration File (config.cfg)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="lists.html" title="Destination List Files"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Config Replicator 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="report-files">
+<h1>Report Files<a class="headerlink" href="#report-files" title="Permalink to this headline">¶</a></h1>
+<p>Config Replicator generate two types of output reports, the first one it is always generated after each run of the program
+and are called Summary Reports, he second ones are only generated when the script file has the directive !output configured.
+The name format of the files are:</p>
+<p>SummaryReportMMDDYYYYHHMM.txt and OutputReportMMDDYYYYHHMM.txt where:</p>
+<ul class="simple">
+<li><strong>MM:</strong> Month when the report was generated</li>
+<li><strong>DD:</strong> Day when the report was generated</li>
+<li><strong>YYYY:</strong> Year when the report was generated</li>
+<li><strong>HH:</strong> Hour when the report was generated</li>
+<li><strong>MM:</strong> Minute when the report was generated</li>
+</ul>
+<hr class="docutils" />
+<div class="section" id="summary-reports">
+<h2>Summary Reports<a class="headerlink" href="#summary-reports" title="Permalink to this headline">¶</a></h2>
+<p>The Summary Reports contains three sections that are described below:</p>
+<div class="section" id="information">
+<h3>Information<a class="headerlink" href="#information" title="Permalink to this headline">¶</a></h3>
+<p>On this section you wil find general information of the run made, there is a subsection that give you the time statistics,
+like:</p>
+<ul class="simple">
+<li><strong>Date:</strong> It is the Date when the program was ran</li>
+<li><strong>Begin Time:</strong> When the program begin the connection attempts to the devices on the destination list</li>
+<li><strong>End Time:</strong> When he program end the connection attempts</li>
+<li><strong>Elapsed Time:</strong> How much time it takes to run the program under the parameters specified</li>
+</ul>
+<p>The second subsection gives you information about the parameters used to ru the program:</p>
+<ul class="simple">
+<li><strong>Script:</strong> The name and description of the script used to run the program</li>
+<li><strong>Destination List:</strong> The name and description of the destination list used</li>
+<li><strong>Number of Threads:</strong> The number of threads used to connect to the devices</li>
+<li><strong>Username:</strong> The username used to connect to the devices</li>
+</ul>
+<p>The third subsection gives you the information of the connections:</p>
+<ul class="simple">
+<li><strong>Total Devices processed:</strong> The total number of devices processed</li>
+<li><strong>Connections with errors:</strong> The Number of devices with errors, a successful connection but an error in the commands sent increment this counter also a no response from the device</li>
+<li><strong>Successful Connections:</strong> The number of successful connections, this counter is incremented only when the program made a successful connection via telnet or ssh to the router, the successfulness of the commands sent are not taking into consideration</li>
+</ul>
+</div>
+<div class="section" id="error-stats">
+<h3>Error Stats<a class="headerlink" href="#error-stats" title="Permalink to this headline">¶</a></h3>
+<p>Here are presented teh statistics about how many routers have the same problem</p>
+</div>
+<div class="section" id="error-details">
+<h3>Error Details<a class="headerlink" href="#error-details" title="Permalink to this headline">¶</a></h3>
+<p>On this section each connection error accounted on the &#8220;Connections with errors:&#8221; are presented, here you could check in detail
+which was the error in the connection.</p>
+</div>
+<div class="section" id="error-connection-lists">
+<h3>Error Connection Lists<a class="headerlink" href="#error-connection-lists" title="Permalink to this headline">¶</a></h3>
+<p>On this section are presented the list of the routers that had a specific problem in the format:</p>
+<p>ip_address name_of_device connection_method</p>
+<p>For Example:</p>
+<p>192.168.1.100 Denver_Router telnet</p>
+<p>This format will allow you to copy and paste this items on a list file in order to run another batch with the new list</p>
+</div>
+<div class="section" id="successful-connections">
+<h3>Successful Connections<a class="headerlink" href="#successful-connections" title="Permalink to this headline">¶</a></h3>
+<p>On this section you will be presented with the successful connection attempts to the routers, the format of this section is:</p>
+<p>IP_Address &#8211;&gt; Name_of_the_device</p>
+<p>For Example:</p>
+<p>192.168.10.183  &#8211;&gt;     R1-Router</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="output-reports">
+<h2>Output Reports<a class="headerlink" href="#output-reports" title="Permalink to this headline">¶</a></h2>
+<p>The Output Reports contains two sections that are described below:</p>
+<div class="section" id="id1">
+<h3>Information<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Only the following information is presented:</p>
+<ul class="simple">
+<li><strong>Date:</strong> It is the Date when the program was ran</li>
+<li><strong>Script:</strong> The name and description of the script used to run the program</li>
+<li><strong>Destination List:</strong> The name and description of the destination list used</li>
+</ul>
+</div>
+<div class="section" id="output-details">
+<h3>Output Details<a class="headerlink" href="#output-details" title="Permalink to this headline">¶</a></h3>
+<p>On this section it is presented the output of each command on the script divided by device:</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Report Files</a><ul>
+<li><a class="reference internal" href="#summary-reports">Summary Reports</a><ul>
+<li><a class="reference internal" href="#information">Information</a></li>
+<li><a class="reference internal" href="#error-stats">Error Stats</a></li>
+<li><a class="reference internal" href="#error-details">Error Details</a></li>
+<li><a class="reference internal" href="#error-connection-lists">Error Connection Lists</a></li>
+<li><a class="reference internal" href="#successful-connections">Successful Connections</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#output-reports">Output Reports</a><ul>
+<li><a class="reference internal" href="#id1">Information</a></li>
+<li><a class="reference internal" href="#output-details">Output Details</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="lists.html"
+                        title="previous chapter">Destination List Files</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="configuration.html"
+                        title="next chapter">Configuration File (config.cfg)</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/reports.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="configuration.html" title="Configuration File (config.cfg)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="lists.html" title="Destination List Files"
+             >previous</a> |</li>
+        <li><a href="index.html">Config Replicator 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Miguel Ercolino.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Scripts Files &mdash; Config Replicator 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Config Replicator 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Destination List Files" href="lists.html" />
+    <link rel="prev" title="Multithreading and Queues" href="multithreading.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lists.html" title="Destination List Files"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="multithreading.html" title="Multithreading and Queues"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Config Replicator 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="scripts-files">
+<h1>Scripts Files<a class="headerlink" href="#scripts-files" title="Permalink to this headline">¶</a></h1>
+<p>All the scripts files should be saved with an &#8221;.src&#8221; extension on the &#8220;scripts&#8221; directory, this files should be</p>
+<p>The script files should have a &#8221;.src&#8221; extension and it is a plain device script as you were in front of a vty console
+connected to it, for example if you are connecting to a Cisco Router then it should be commands as the ones you
+will send when you are connected via telnet/ssh to the router.</p>
+<p>There are other directives that could be configured on the scripts that tells the program some things, this directives are:
+&#8221;!desc:&#8221; &#8211;&gt; This directive without the quotes are used to add a Description comment in the Scripts Menu
+&#8221;!output&#8221; &#8211;&gt; This directive without the quotes are used to specify that the output of the commands should be grabbed.</p>
+<hr class="docutils" />
+<p>For example, each line of the Script Menu is formed with:</p>
+<ul class="simple">
+<li><strong>Number:</strong> To identify the selection</li>
+<li><strong>Script Name:</strong> The name of the script i.e: name_script.src</li>
+<li><strong>Description:</strong> the description of the script file configured with the &#8221;!desc&#8221; directive, if the directive is not present then &#8220;N/A&#8221; is shown</li>
+</ul>
+<hr class="docutils" />
+<p>When the directive &#8221;!output&#8221; is used, the output will be saved on a file called <em>OutputReportMMDDYYYY.txt</em> inside the directory &#8220;/reports&#8221;</p>
+<p>If &#8221;!output&#8221; is present in the script file, then the program send before the commands a command to not to stop for any user input
+to the device and after the commands were sent then the program send the command to return the terminal to the defaults. This
+commands could be configured in the &#8220;config.cfg&#8221; file with the &#8220;no_stop&#8221; and &#8220;default_stop&#8221; variables.</p>
+<p>You should be sure that there is always a blank line at the end of the script to ensure that the last command is sent without
+any problem, if the script is for Cisco devices it is recommended to finish all the script with teh character &#8221;!&#8221; without
+the quotes</p>
+<p>On the scripts folder there are two example script files:
+- <em>loopback_config.src:</em> This file send the commands to a Cisco devices to configure two loopback interfaces
+- <em>show_interfaces.src:</em> This file is an example of a script with output, it send the &#8220;show ip interface brief&#8221; to a cisco Device and grab the output</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="multithreading.html"
+                        title="previous chapter">Multithreading and Queues</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lists.html"
+                        title="next chapter">Destination List Files</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/scripts.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lists.html" title="Destination List Files"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="multithreading.html" title="Multithreading and Queues"
+             >previous</a> |</li>
+        <li><a href="index.html">Config Replicator 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Miguel Ercolino.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

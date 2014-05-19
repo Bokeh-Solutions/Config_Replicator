@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to Config Replicator’s documentation! &mdash; Config Replicator 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Config Replicator 1.0.0 documentation" href="#" />
+    <link rel="next" title="Installation" href="installation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">Config Replicator 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-config-replicator-s-documentation">
+<h1>Welcome to Config Replicator&#8217;s documentation!<a class="headerlink" href="#welcome-to-config-replicator-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Config Replicator is a program written in Python 2.7.6 multiplatform and multithreaded created to help to the deployment
+of the same configuration to a list of network devices, could be also used to grab the output of commands in a list of network
+devices, until now it was only tested with Cisco Routers but through the &#8220;config.cfg&#8221; file could be used with other
+devices too.</p>
+<p>Config replicator grab a list of commands to send to the devices saved on a file with a &#8221;.src&#8221; extension saved in the
+&#8220;scripts&#8221; directory, then grab the network device list from a destination list file with a &#8221;.lst&#8217; extension saved on the
+&#8220;lists&#8221; directory. All he commands grabbed will be send to each one of the devices on the destination list.</p>
+<p>The flow of the program could be resumed as:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Select the script to send to each device</li>
+<li>Select the destination list where to send the script selected</li>
+<li>Select the number of threads to use</li>
+<li>Enter the Username and Password to use to connect to the devices</li>
+<li>Enter the enable password if enable was configured in &#8216;config.cfg&#8217;</li>
+</ul>
+</div></blockquote>
+<p>In the following sections it is specified how the program works</p>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="start.html">Starting Config Replicator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">Config Replicator GUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gui.html#the-setting-window">The Setting Window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.html#the-report-window">The Report Window</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="multithreading.html">Multithreading and Queues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts.html">Scripts Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lists.html">Destination List Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reports.html">Report Files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reports.html#summary-reports">Summary Reports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reports.html#output-reports">Output Reports</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration File (config.cfg)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#enable-section">[enable] Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#prompts-section">[prompts] Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#errors-section">[errors] Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#output-section">[output] Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#telnet-section">[telnet] Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#ssh-section">[ssh] Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#menus-section">[menus] Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#progress-section">[progress] Section</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="executable.html">How to Make an Executable for your platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">Classes and Functions Documentation</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to Config Replicator&#8217;s documentation!</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="next chapter">Installation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             >next</a> |</li>
+        <li><a href="#">Config Replicator 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Miguel Ercolino.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

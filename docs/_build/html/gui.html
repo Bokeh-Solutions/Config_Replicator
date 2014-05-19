@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Config Replicator GUI &mdash; Config Replicator 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Config Replicator 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Multithreading and Queues" href="multithreading.html" />
+    <link rel="prev" title="Starting Config Replicator" href="start.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="multithreading.html" title="Multithreading and Queues"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="start.html" title="Starting Config Replicator"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Config Replicator 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="config-replicator-gui">
+<h1>Config Replicator GUI<a class="headerlink" href="#config-replicator-gui" title="Permalink to this headline">¶</a></h1>
+<p>The Config Replicator GUI basically has the same flow of the text-based, but with a nice GUI and a more intuitive use flow.</p>
+<p>The first Dialog just warns you about what the program does and which is the flow that uses.</p>
+<img alt="_images/image1.png" src="_images/image1.png" />
+<p>From here you will land in the main window where you will do almost everything in the program</p>
+<img alt="_images/image2.png" src="_images/image2.png" />
+<p>In the main window you will see a toolbar and three main areas, the first area is at the top and you could choose the number of threads to use to speed up the process,
+the number of threads is limited to 500 but you should do a check first in order to avoid undesirable results. The next area is where you could choose the script to use,
+the rules for the scripts are the same that in the text-based program, you could edit the script with the gui and save it on the same file or in a new one with the button &#8220;Save Script&#8221;,
+in the last area you could choose the destination list as in the scripts the same rules applys and you could edit the list and save it on the same file or in a new one with the button
+&#8220;Save Dest List&#8221;</p>
+<p>On the toolbar you could see a number of icons that are described below:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Connect:</strong> Used to connect to the devices using the script, list and number of threads selected, this button wont be activated unless you choose the script and destination list.</li>
+<li><strong>Reports:</strong> Here you could see the reports generated after a run, that means that you should select the script, the destination list and press connect, when you return to this window you could launch the reports.</li>
+<li><strong>Clear:</strong> With this button you clear everything to begin again.</li>
+<li><strong>Settings:</strong> With this button you could edit the config.cfg.</li>
+<li><strong>Help:</strong> The help button</li>
+<li><strong>Exit:</strong> To exit the program</li>
+</ul>
+</div></blockquote>
+<img alt="_images/image4.png" src="_images/image4.png" />
+<p>Once all the areas were filled and the &#8220;Connect&#8221; button pressed you will be prompted for the credentials to connect to the devices and the enable password if was configured on the settings.</p>
+<img alt="_images/image8.png" src="_images/image8.png" />
+<img alt="_images/image9.png" src="_images/image9.png" />
+<p>Then there will be a warning reminding you that doing this could be dangerous.</p>
+<img alt="_images/image10.png" src="_images/image10.png" />
+<p>Then the monitoring window will appear</p>
+<img alt="_images/image11.png" src="_images/image11.png" />
+<p>On the monitoring window you will see in real time the progress of the connection, the number of devices with errors, and the number of successful conenctions
+as the elapsed time. Once all the connections are done the &#8220;Ok&#8221; button will activate and you could return to the main window.</p>
+<div class="section" id="the-setting-window">
+<h2>The Setting Window<a class="headerlink" href="#the-setting-window" title="Permalink to this headline">¶</a></h2>
+<p>On the settings window you could edit the config.cfg file, you should press &#8220;Edit&#8221; to begin to make changes on the file and &#8220;Save&#8221; to save it</p>
+<img alt="_images/image6.png" src="_images/image6.png" />
+</div>
+<div class="section" id="the-report-window">
+<h2>The Report Window<a class="headerlink" href="#the-report-window" title="Permalink to this headline">¶</a></h2>
+<p>Once the running is done and you close the monitoring window you could press &#8220;reports&#8221; to see the generated reports as shown in the figures below:</p>
+<img alt="_images/image12.png" src="_images/image12.png" />
+<img alt="_images/image13.png" src="_images/image13.png" />
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Config Replicator GUI</a><ul>
+<li><a class="reference internal" href="#the-setting-window">The Setting Window</a></li>
+<li><a class="reference internal" href="#the-report-window">The Report Window</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="start.html"
+                        title="previous chapter">Starting Config Replicator</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="multithreading.html"
+                        title="next chapter">Multithreading and Queues</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/gui.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="multithreading.html" title="Multithreading and Queues"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="start.html" title="Starting Config Replicator"
+             >previous</a> |</li>
+        <li><a href="index.html">Config Replicator 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Miguel Ercolino.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Destination List Files &mdash; Config Replicator 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Config Replicator 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Report Files" href="reports.html" />
+    <link rel="prev" title="Scripts Files" href="scripts.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="reports.html" title="Report Files"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="scripts.html" title="Scripts Files"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Config Replicator 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="destination-list-files">
+<h1>Destination List Files<a class="headerlink" href="#destination-list-files" title="Permalink to this headline">¶</a></h1>
+<p>All the destination lists should be saved with a &#8221;.lst&#8221; extension on the &#8220;lists&#8221; directory. The format of this file is:</p>
+<p>Ip_address Name_of_the device [telnet/ssh]</p>
+<hr class="docutils" />
+<p>For example:</p>
+<p><strong>10.10.10.1 Denver_Router telnet</strong> &#8211;&gt; it will connect to the Denver_Router with an ip address of 10.10.10.1 via telnet.</p>
+<p><strong>10.10.10.1 Denver_Router</strong> &#8211;&gt; it is the same as the previous entry, the default method of connection is telnet, if no
+method of connection is found or the name is not recognizable then telnet will always be used.</p>
+<p><strong>10.10.10.1 Denver_Router ssh</strong> &#8211;&gt; it will connect to the Denver_Router with an ip address of 10.10.10.1 via ssh.</p>
+<hr class="docutils" />
+<p>As in the scripts files the destination list files use also the &#8221;!desc:&#8221; directive to show the description of the list in the
+Scripts Menu, each line of the Destination List Menu is formed with:</p>
+<ul class="simple">
+<li><strong>Number:</strong> To identify the selection</li>
+<li><strong>List Name:</strong> The name of the list i.e: name_script.lst</li>
+<li><strong>Description:</strong> the description of the script file configured with the &#8221;!desc&#8221; directive, if the directive is not present then &#8220;N/A&#8221; is shown</li>
+</ul>
+<p>On the scripts folder there are one example list files:</p>
+<ul class="simple">
+<li><em>routers.lst:</em> This file send the commands to a different devices using different connection methods</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="scripts.html"
+                        title="previous chapter">Scripts Files</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="reports.html"
+                        title="next chapter">Report Files</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/lists.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="reports.html" title="Report Files"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="scripts.html" title="Scripts Files"
+             >previous</a> |</li>
+        <li><a href="index.html">Config Replicator 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Miguel Ercolino.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>
