@@ -1,0 +1,20 @@
+!desc: Change Banners
+!
+conf t
+banner motd @ This is the
+banner MOTD that it is configured@
+!
+username test privilege 7 password 1234
+!
+banner login @
+	This is the Login Banner
+	That it is configured
+@
+!
+interface f0/1
+ip address 192.168.20.1 255.255.255.0
+no shut
+!
+banner exec @ this is a banner exec @
+exit
+!
