@@ -1,6 +1,6 @@
 !DESC: Router List
 
-192.168.10.153 R1-Router ssh
+192.168.10.182 R1 telnet
 192.168.10.196 R2 telnet
 192.168.10.193 R3 ssh
 192.168.10.192 R4 dlfkj

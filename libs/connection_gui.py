@@ -1,8 +1,10 @@
-from PyQt4.QtCore import *
 import telnetlib
 import ConfigParser
 import logging
 import re
+
+from PyQt4.QtCore import *
+
 
 try:
     import paramiko
@@ -73,6 +75,9 @@ class connectDevices(QThread):
         ssh_tout = int(config.get('ssh', 'timeout'))
         no_stop = config.get('output', 'no_stop').replace("\'", "")
         default_stop = config.get('output', 'default_stop').replace("\'", "")
+
+        #Multiline Commands
+        multiline = config.get('multiline', 'commands').replace('\'', '').split(',')
 
         while not self.q_dest.empty():
             error = False
@@ -197,18 +202,43 @@ class connectDevices(QThread):
                     #Sending Commands
                     resp_out = ''
                     if resp_cmd[0] >= 0:
+                        #Flag for multiline commands
+                        ml = False
                         for cmd in self.cmd:
-                            telnet.write(cmd)
-                            resp_cmd = telnet.expect(telnet_device_prompts, timeout=telnet_tout)
-                            if self.out:
-                                resp_out = resp_out + resp_cmd[2] + '\n' + '-' * 70 + '\n'
-                            for err in error_strings:
-                                if re.search(re.compile(err), resp_cmd[2]):
-                                    self.q_error.put((ip, name, mode, "There was a problem with the command \"%s\"" % cmd.strip('\n')))
-                                    error = True
+                            #loop to check if cmd is a multiline command
+                            for rgx in multiline:
+                                #Check if it is the first line of a multiline command
+                                first_line = re.search(rgx, cmd)
+                                escape_char = rgx[-2]
+                                if first_line and not ml:
+                                    #Check if a multiline command is written in a one line
+                                    one_multiline = re.search(rgx + '.+' + escape_char + '$', cmd)
+                                    if not one_multiline:
+                                        ml = True
                                     break
-                            if error:
-                                break
+                                else:
+                                    #Check if it is the last line of the multiline command
+                                    last_line = re.search('.*' + escape_char + '$', cmd)
+                                    if last_line and ml:
+                                        ml = False
+                            #If it is a multiline send it without a prompt, if not send it with prompt
+                            if ml:
+                                telnet.write(cmd)
+                            else:
+                                #If it is not multiline command then wait for prompt
+                                telnet.write(cmd)
+                                resp_cmd = telnet.expect(telnet_device_prompts, timeout=telnet_tout)
+                                if self.out:
+                                    resp_out = resp_out + resp_cmd[2] + '\n' + '-' * 70 + '\n'
+                                for err in error_strings:
+                                    if re.search(re.compile(err), resp_cmd[2]):
+                                        self.q_error.put((ip, name, mode,
+                                                          "There was a problem with the command \"%s\"" % cmd.strip(
+                                                              '\n')))
+                                        error = True
+                                        break
+                                if error:
+                                    break
                         #Sending a default terminal stop
                         if self.out:
                             telnet.write(default_stop + '\n')

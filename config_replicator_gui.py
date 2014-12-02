@@ -1,8 +1,15 @@
 #Importing Python Libraries
-from PyQt4.QtGui import *
-from PyQt4.QtCore import *
 import re
 import ConfigParser
+
+from PyQt4.QtGui import *
+from PyQt4.QtCore import *
+
+
+
+
+
+
 
 #Importing Paramiko
 try:
@@ -239,6 +246,7 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
         """
         Function to process the commands on the script
         """
+
         #Creating list with commands to send and output directive
         fd = open(fname, 'r')
         output_pattern = re.compile('(^![Oo][Uu][Tt][Pp][Uu][Tt])(.*)\n')

@@ -6,6 +6,7 @@ import logging
 
 try:
     import paramiko
+
     paramiko_error = False
 except ImportError as e:
     print """##############
@@ -14,7 +15,7 @@ except ImportError as e:
 There was a problem importing the python library \"Paramiko\" without this library it will not be possible to connect
 to devices using SSH
 """
-    print 'Error: %s' % e.message if e.message else 'Error[' + str(e.errno) +'] ' + e.strerror
+    print 'Error: %s' % e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror
     print '-' * 70
     raw_input('Press any key to continue.')
     paramiko_error = True
@@ -50,6 +51,7 @@ class Connection(threading.Thread):
 
     handler = handler to output debug to file
     """
+
     def __init__(self, q_dest, q_error, q_out, q_succ, user, pwd, en_pwd, cmd, out, dbg, logger, handler):
         """
         Initialization function
@@ -74,7 +76,7 @@ class Connection(threading.Thread):
         """
         config = ConfigParser.ConfigParser()
 
-        #Parse the configuration file
+        # Parse the configuration file
         self.logger.debug('Parsing the configuration file')
         config.read('config.cfg')
         enable = config.get('enable', 'enable').replace("\'", "").lower()
@@ -91,6 +93,9 @@ class Connection(threading.Thread):
         no_stop = config.get('output', 'no_stop').replace("\'", "")
         default_stop = config.get('output', 'default_stop').replace("\'", "")
 
+        #Multiline Commands
+        multiline = config.get('multiline', 'commands').replace('\'', '').split(',')
+
         while not self.q_dest.empty():
             error = False
             #Picking a device from the queue
@@ -101,8 +106,10 @@ class Connection(threading.Thread):
                 try:
                     telnet = telnetlib.Telnet(ip, 23, timeout=telnet_tout)
                 except Exception as e:
-                    self.logger.info('There was a problem connecting to %s with error %s' % (ip, e.message if e.message else 'Error[' + str(e.errno) +'] ' + e.strerror))
-                    self.q_error.put((ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                    self.logger.info('There was a problem connecting to %s with error %s' % (
+                        ip, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                    self.q_error.put(
+                        (ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     self.q_dest.task_done()
                     continue
 
@@ -116,7 +123,8 @@ class Connection(threading.Thread):
                         self.q_dest.task_done()
                         continue
                 except Exception as e:
-                    self.q_error.put((ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                    self.q_error.put(
+                        (ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     self.q_dest.task_done()
                     continue
 
@@ -130,7 +138,8 @@ class Connection(threading.Thread):
                         self.q_dest.task_done()
                         continue
                 except Exception as e:
-                    self.q_error.put((ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                    self.q_error.put(
+                        (ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     telnet.close()
                     self.q_dest.task_done()
                     continue
@@ -143,7 +152,8 @@ class Connection(threading.Thread):
                         else:
                             telnet.write('\n')
                     except Exception as e:
-                        self.q_error.put((ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        self.q_error.put(
+                            (ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         telnet.close()
                         self.q_dest.task_done()
                         continue
@@ -155,7 +165,8 @@ class Connection(threading.Thread):
                         else:
                             telnet.write('\n')
                     except Exception as e:
-                        self.q_error.put((ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        self.q_error.put(
+                            (ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         telnet.close()
                         self.q_dest.task_done()
                         continue
@@ -191,7 +202,8 @@ class Connection(threading.Thread):
                             self.q_dest.task_done()
                             continue
                     except Exception as e:
-                        self.q_error.put((ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        self.q_error.put(
+                            (ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         telnet.close()
                         self.q_dest.task_done()
                         continue
@@ -205,18 +217,43 @@ class Connection(threading.Thread):
                     #Sending Commands
                     resp_out = ''
                     if resp_cmd[0] >= 0:
+                        #Flag for multiline commands
+                        ml = False
                         for cmd in self.cmd:
-                            telnet.write(cmd)
-                            resp_cmd = telnet.expect(telnet_device_prompts, timeout=telnet_tout)
-                            if self.out:
-                                resp_out = resp_out + resp_cmd[2] + '\n' + '-' * 70 + '\n'
-                            for err in error_strings:
-                                if re.search(re.compile(err), resp_cmd[2]):
-                                    self.q_error.put((ip, name, mode, "There was a problem with the command \"%s\"" % cmd.strip('\n')))
-                                    error = True
+                            #loop to check if cmd is a multiline command
+                            for rgx in multiline:
+                                #Check if it is the first line of a multiline command
+                                first_line = re.search(rgx, cmd)
+                                escape_char = rgx[-2]
+                                if first_line and not ml:
+                                    #Check if a multiline command is written in a one line
+                                    one_multiline = re.search(rgx + '.+' + escape_char + '$', cmd)
+                                    if not one_multiline:
+                                        ml = True
                                     break
-                            if error:
-                                break
+                                else:
+                                    #Check if it is the last line of the multiline command
+                                    last_line = re.search('.*' + escape_char + '$', cmd)
+                                    if last_line and ml:
+                                        ml = False
+                            #If it is a multiline send it without a prompt, if not send it with prompt
+                            if ml:
+                                telnet.write(cmd)
+                            else:
+                                #If it is not multiline command then wait for prompt
+                                telnet.write(cmd)
+                                resp_cmd = telnet.expect(telnet_device_prompts, timeout=telnet_tout)
+                                if self.out:
+                                    resp_out = resp_out + resp_cmd[2] + '\n' + '-' * 70 + '\n'
+                                for err in error_strings:
+                                    if re.search(re.compile(err), resp_cmd[2]):
+                                        self.q_error.put((ip, name, mode,
+                                                          "There was a problem with the command \"%s\"" % cmd.strip(
+                                                              '\n')))
+                                        error = True
+                                        break
+                                if error:
+                                    break
                         #Sending a default terminal stop
                         if self.out:
                             telnet.write(default_stop + '\n')
@@ -233,7 +270,8 @@ class Connection(threading.Thread):
                     self.q_dest.task_done()
 
                 except Exception as e:
-                    self.q_error.put((ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                    self.q_error.put(
+                        (ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     telnet.close()
                     self.q_dest.task_done()
                     continue
@@ -255,8 +293,10 @@ class Connection(threading.Thread):
                     try:
                         client.connect(ip, port=22, username=self.user, password=self.pwd, timeout=ssh_tout)
                     except Exception as e:
-                        self.logger.info('There was a problem connecting to %s with error %s' % (ip, e.message if e.message else 'Error[' + str(e.errno) +'] ' + e.strerror))
-                        self.q_error.put((ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) +'] ' + e.strerror))
+                        self.logger.info('There was a problem connecting to %s with error %s' % (
+                            ip, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        self.q_error.put(
+                            (ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         self.q_dest.task_done()
                         continue
 
@@ -276,7 +316,8 @@ class Connection(threading.Thread):
                             break
 
                     if enable_ssh and enable != 'yes':
-                        self.q_error.put((ip, name, mode, 'SSH Error device ask for enable password and enable not configured in config.cfg section [enable]'))
+                        self.q_error.put((ip, name, mode,
+                                          'SSH Error device ask for enable password and enable not configured in config.cfg section [enable]'))
                         client.close()
                         self.q_dest.task_done()
                         continue
@@ -328,7 +369,8 @@ class Connection(threading.Thread):
                         #Checking if there was not error in the command
                         for err in error_strings:
                             if re.search(re.compile(err), buff):
-                                self.q_error.put((ip, name, mode, "There was a problem with the command \"%s\"" % cmd.strip('\n')))
+                                self.q_error.put(
+                                    (ip, name, mode, "There was a problem with the command \"%s\"" % cmd.strip('\n')))
                                 error = True
                                 break
                         if error:
@@ -348,8 +390,11 @@ class Connection(threading.Thread):
                     client.close()
                     self.q_dest.task_done()
                 else:
-                    self.logger.info('Could not connect to ip %s via Ssh because Paramiko library is not installed' % ip)
-                    self.q_error.put((ip, name, mode, "Paramiko library not installed, SSH connections are not possible"))
+                    self.logger.info(
+                        'Could not connect to ip %s via Ssh because Paramiko library is not installed' % ip)
+                    self.q_error.put(
+                        (ip, name, mode, "Paramiko library not installed, SSH connections are not possible"))
                     self.q_dest.task_done()
+
 
 __author__ = 'Miguel Ercolino'

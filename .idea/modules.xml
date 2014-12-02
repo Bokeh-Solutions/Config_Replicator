@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Config_Replicator.iml" filepath="$PROJECT_DIR$/.idea/Config_Replicator.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../Qt_Example/.idea/Qt_Example.iml" filepath="$PROJECT_DIR$/../Qt_Example/.idea/Qt_Example.iml" />
     </modules>
   </component>
 </project>

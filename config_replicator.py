@@ -7,7 +7,6 @@ import getpass
 import ConfigParser
 import datetime
 
-
 from libs import menu
 from libs import summary_report as sr
 from libs import connection as conn
@@ -120,6 +119,7 @@ if __name__ == "__main__":
     list_menu_col_number = int(configure.get('menus', 'lists_menu_col_number'))
     list_menu_col_item = int(configure.get('menus', 'lists_menu_col_item'))
     list_menu_col_desc = int(configure.get('menus', 'lists_menu_col_desc'))
+
 
     #Creation of the Scripts Menu
     logger.debug('Creating Script Menu')
