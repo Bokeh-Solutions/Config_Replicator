@@ -1,0 +1,9 @@
+# Ignore PYC files
+*.pyc
+
+#Ignore files inside debug and reports
+reports/*
+debugs/*
+
+#Ignore Pycharm files
+**/.idea

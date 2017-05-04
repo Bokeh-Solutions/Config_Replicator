@@ -15,7 +15,7 @@ except ImportError as e:
 There was a problem importing the python library \"Paramiko\" without this library it will not be possible to connect
 to devices using SSH
 """
-    print 'Error: %s' % e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror
+    print 'Error: %s' % e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror
     print '-' * 70
     raw_input('Press any key to continue.')
     paramiko_error = True
@@ -107,9 +107,9 @@ class Connection(threading.Thread):
                     telnet = telnetlib.Telnet(ip, 23, timeout=telnet_tout)
                 except Exception as e:
                     self.logger.info('There was a problem connecting to %s with error %s' % (
-                        ip, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        ip, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     self.q_error.put(
-                        (ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     self.q_dest.task_done()
                     continue
 
@@ -124,7 +124,7 @@ class Connection(threading.Thread):
                         continue
                 except Exception as e:
                     self.q_error.put(
-                        (ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     self.q_dest.task_done()
                     continue
 
@@ -139,7 +139,7 @@ class Connection(threading.Thread):
                         continue
                 except Exception as e:
                     self.q_error.put(
-                        (ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     telnet.close()
                     self.q_dest.task_done()
                     continue
@@ -153,7 +153,7 @@ class Connection(threading.Thread):
                             telnet.write('\n')
                     except Exception as e:
                         self.q_error.put(
-                            (ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                            (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         telnet.close()
                         self.q_dest.task_done()
                         continue
@@ -166,7 +166,7 @@ class Connection(threading.Thread):
                             telnet.write('\n')
                     except Exception as e:
                         self.q_error.put(
-                            (ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                            (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         telnet.close()
                         self.q_dest.task_done()
                         continue
@@ -203,7 +203,7 @@ class Connection(threading.Thread):
                             continue
                     except Exception as e:
                         self.q_error.put(
-                            (ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                            (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         telnet.close()
                         self.q_dest.task_done()
                         continue
@@ -271,7 +271,7 @@ class Connection(threading.Thread):
 
                 except Exception as e:
                     self.q_error.put(
-                        (ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     telnet.close()
                     self.q_dest.task_done()
                     continue
@@ -294,9 +294,9 @@ class Connection(threading.Thread):
                         client.connect(ip, port=22, username=self.user, password=self.pwd, timeout=ssh_tout)
                     except Exception as e:
                         self.logger.info('There was a problem connecting to %s with error %s' % (
-                            ip, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                            ip, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         self.q_error.put(
-                            (ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                            (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         self.q_dest.task_done()
                         continue
 

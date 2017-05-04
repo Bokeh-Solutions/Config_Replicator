@@ -88,7 +88,7 @@ class connectDevices(QThread):
                 try:
                     telnet = telnetlib.Telnet(ip, 23, timeout=telnet_tout)
                 except Exception as e:
-                    self.q_error.put((ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                    self.q_error.put((ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     self.q_dest.task_done()
                     self.emit(SIGNAL('err_conn'))
                     continue
@@ -104,7 +104,7 @@ class connectDevices(QThread):
                         self.emit(SIGNAL('err_conn'))
                         continue
                 except Exception as e:
-                    self.q_error.put((ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                    self.q_error.put((ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     self.q_dest.task_done()
                     self.emit(SIGNAL('err_conn'))
                     continue
@@ -120,7 +120,7 @@ class connectDevices(QThread):
                         self.emit(SIGNAL('err_conn'))
                         continue
                 except Exception as e:
-                    self.q_error.put((ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                    self.q_error.put((ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     telnet.close()
                     self.q_dest.task_done()
                     self.emit(SIGNAL('err_conn'))
@@ -134,7 +134,7 @@ class connectDevices(QThread):
                         else:
                             telnet.write('\n')
                     except Exception as e:
-                        self.q_error.put((ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        self.q_error.put((ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         telnet.close()
                         self.q_dest.task_done()
                         self.emit(SIGNAL('err_conn'))
@@ -147,7 +147,7 @@ class connectDevices(QThread):
                         else:
                             telnet.write('\n')
                     except Exception as e:
-                        self.q_error.put((ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        self.q_error.put((ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         telnet.close()
                         self.q_dest.task_done()
                         self.emit(SIGNAL('err_conn'))
@@ -187,7 +187,7 @@ class connectDevices(QThread):
                             self.emit(SIGNAL('err_conn'))
                             continue
                     except Exception as e:
-                        self.q_error.put((ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        self.q_error.put((ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         telnet.close()
                         self.q_dest.task_done()
                         self.emit(SIGNAL('err_conn'))
@@ -257,7 +257,7 @@ class connectDevices(QThread):
                     self.emit(SIGNAL('succ_conn'))
 
                 except Exception as e:
-                    self.q_error.put((ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                    self.q_error.put((ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     telnet.close()
                     self.q_dest.task_done()
                     self.emit(SIGNAL('err_conn'))
@@ -275,7 +275,7 @@ class connectDevices(QThread):
                     try:
                         client.connect(ip, port=22, username=self.user, password=self.pwd, timeout=ssh_tout)
                     except Exception as e:
-                        self.q_error.put((ip, name, mode, e.message if e.message else 'Error[' + str(e.errno) +'] ' + e.strerror))
+                        self.q_error.put((ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) +'] ' + e.strerror))
                         self.q_dest.task_done()
                         self.emit(SIGNAL('err_conn'))
                         continue
