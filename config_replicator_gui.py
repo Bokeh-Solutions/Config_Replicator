@@ -196,7 +196,7 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
         #Use Enable?
         configure = ConfigParser.ConfigParser()
         configure.read('config.cfg')
-        use_enable = configure.get('enable', 'enable').replace("\'", "").lower()
+        use_enable = configure.get('enable', 'use_enable').replace("\'", "").lower()
 
         if use_enable == 'yes':
             #Launching Dialog to get the credentials
