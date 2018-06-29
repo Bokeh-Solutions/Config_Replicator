@@ -76,6 +76,8 @@ class Connection(threading.Thread):
         """
         config = ConfigParser.ConfigParser()
 
+        # TODO: Find solution to errors accessing config file, adding confiuration into a queue and create adirectory on each process created
+
         # Parse the configuration file
         self.logger.debug('Parsing the configuration file')
         config.read('config.cfg')
