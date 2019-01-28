@@ -1,7 +1,0 @@
-!DESC: USAP List
-
-198.102.91.7 den-rantrust-r2 ssh
-157.132.175.242 den-idf2-s1 ssh
-157.132.167.2 den-dtl-s2 ssh
-157.132.185.2 den-dtl-s1 ssh
-157.132.175.93 den-entcore-s2 ssh
