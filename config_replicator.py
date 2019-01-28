@@ -101,7 +101,7 @@ if __name__ == "__main__":
     configure = ConfigParser.ConfigParser()
     configure.read('config.cfg')
     #Use Enable?
-    use_enable = configure.get('enable', 'enable').replace("\'", "").lower()
+    use_enable = configure.get('enable', 'use_enable').replace("\'", "").lower()
     #Scripts menu parameters
     script_menu_page_len = int(configure.get('menus', 'scripts_menu_len_page'))
     script_menu_title = configure.get('menus', 'scripts_menu_title').replace('\'', '')

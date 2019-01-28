@@ -76,10 +76,12 @@ class Connection(threading.Thread):
         """
         config = ConfigParser.ConfigParser()
 
+        # TODO: Find solution to errors accessing config file, adding confiuration into a queue and create adirectory on each process created
+
         # Parse the configuration file
         self.logger.debug('Parsing the configuration file')
         config.read('config.cfg')
-        enable = config.get('enable', 'enable').replace("\'", "").lower()
+        enable = config.get('enable', 'use_enable').replace("\'", "").lower()
         enable_command = config.get('enable', 'enable_command').replace("\'", "").lower()
         username_prompts = config.get('prompts', 'username_prompts').replace("\'", "").split(',')
         password_prompts = config.get('prompts', 'password_prompts').replace("\'", "").split(',')
