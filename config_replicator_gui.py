@@ -195,7 +195,7 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
 
         #Use Enable?
         configure = ConfigParser.ConfigParser()
-        configure.read('config.cfg')
+        configure.read('config.ini')
         use_enable = configure.get('enable', 'use_enable').replace("\'", "").lower()
 
         if use_enable == 'yes':

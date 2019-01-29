@@ -5,7 +5,7 @@
  * Sphinx JavaScript utilties for the full-text search.
  *
  * :copyright: Copyright 2007-2013 by the Sphinx team, see AUTHORS.
- * :license: BSD, see LICENSE for details.
+ * :license: BSD, see LICENSE.md for details.
  *
  */
 

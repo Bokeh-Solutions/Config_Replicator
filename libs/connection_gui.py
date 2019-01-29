@@ -61,7 +61,7 @@ class connectDevices(QThread):
         config = ConfigParser.ConfigParser()
 
         #Parse the configuration file
-        config.read('config.cfg')
+        config.read('config.ini')
         enable = config.get('enable', 'use_enable').replace("\'", "").lower()
         enable_command = config.get('enable', 'enable_command').replace("\'", "").lower()
         username_prompts = config.get('prompts', 'username_prompts').replace("\'", "").split(',')
@@ -296,7 +296,7 @@ class connectDevices(QThread):
                             break
 
                     if enable_ssh and enable != 'yes':
-                        self.q_error.put((ip, name, mode, 'SSH Error device ask for enable password and enable not configured in config.cfg section [enable]'))
+                        self.q_error.put((ip, name, mode, 'SSH Error device ask for enable password and enable not configured in config.ini section [enable]'))
                         client.close()
                         self.q_dest.task_done()
                         self.emit(SIGNAL('err_conn'))

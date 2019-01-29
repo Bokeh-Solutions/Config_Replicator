@@ -79,11 +79,11 @@ class settingsWindow(QMainWindow, settingswindow.Ui_SettingsWindow):
     def __init__(self, parent=None):
         super(settingsWindow, self).__init__(parent)
         self.setupUi(self)
-        f = open('config.cfg', 'r')
+        f = open('config.ini', 'r')
         self.settingsTextEdit.setPlainText(f.read())
         self.settingsTextEdit.setReadOnly(True)
         f.close()
-        self.statusbar.showMessage('config.cfg')
+        self.statusbar.showMessage('config.ini')
         self.actionSettingsSave.setEnabled(False)
 
     @pyqtSignature("")
@@ -93,19 +93,19 @@ class settingsWindow(QMainWindow, settingswindow.Ui_SettingsWindow):
         """
         self.actionSettingsEdit.setEnabled(False)
         self.settingsTextEdit.setReadOnly(False)
-        self.statusbar.showMessage('Editing config.cfg')
+        self.statusbar.showMessage('Editing config.ini')
 
     @pyqtSignature("")
     def on_actionSettingsSave_triggered(self):
         """
         Function to run when the Save button is pressed in the toolbar
         """
-        f = open('config.cfg', 'w')
+        f = open('config.ini', 'w')
         f.write(self.settingsTextEdit.toPlainText())
         f.close()
         self.actionSettingsEdit.setEnabled(True)
         self.settingsTextEdit.setReadOnly(True)
-        self.statusbar.showMessage('config.cfg Saved...')
+        self.statusbar.showMessage('config.ini Saved...')
 
     @pyqtSignature("")
     def on_settingsTextEdit_textChanged(self):

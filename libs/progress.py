@@ -31,7 +31,7 @@ class Progress (threading.Thread):
 
         #Parse the configuration file
         self.logger.debug('Parsing the configuration file')
-        config.read('config.cfg')
+        config.read('config.ini')
         interval = int(config.get('progress', 'interval'))
 
         while not self.q_dest.empty():

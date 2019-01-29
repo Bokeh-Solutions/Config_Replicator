@@ -99,7 +99,7 @@ if __name__ == "__main__":
     #Parsing config file for the menus parameters
     logger.debug('Parsing the configuration file')
     configure = ConfigParser.ConfigParser()
-    configure.read('config.cfg')
+    configure.read('config.ini')
     #Use Enable?
     use_enable = configure.get('enable', 'use_enable').replace("\'", "").lower()
     #Scripts menu parameters
@@ -279,7 +279,7 @@ if __name__ == "__main__":
     #Ask for enable password
     if use_enable == 'yes':
         clear()
-        print 'You selected the use of enable password in the config.cfg section [enable]'
+        print 'You selected the use of enable password in the config.ini section [enable]'
         print 'Enter the enable password'
         enable_password = getpass.getpass('Enable password: ')
     else:

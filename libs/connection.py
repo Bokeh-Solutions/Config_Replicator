@@ -80,7 +80,7 @@ class Connection(threading.Thread):
 
         # Parse the configuration file
         self.logger.debug('Parsing the configuration file')
-        config.read('config.cfg')
+        config.read('config.ini')
         enable = config.get('enable', 'use_enable').replace("\'", "").lower()
         enable_command = config.get('enable', 'enable_command').replace("\'", "").lower()
         username_prompts = config.get('prompts', 'username_prompts').replace("\'", "").split(',')
@@ -319,7 +319,7 @@ class Connection(threading.Thread):
 
                     if enable_ssh and enable != 'yes':
                         self.q_error.put((ip, name, mode,
-                                          'SSH Error device ask for enable password and enable not configured in config.cfg section [enable]'))
+                                          'SSH Error device ask for enable password and enable not configured in config.ini section [enable]'))
                         client.close()
                         self.q_dest.task_done()
                         continue
