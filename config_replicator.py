@@ -29,10 +29,10 @@ def welcome():
     Welcome to the Config Replicator
     ================================
 
-    All the scripts should be saved with an \".src\" extension on the \"scripts\" directory, read the README file on the
+    All the scripts should be saved with an \".src\" extension on the \"scripts\" directory, read the README.md file on the
     directory to know more about this files.
 
-    All the destination lists should be saved with a \".lst\" extension on the \"lists\" directory, read the README file
+    All the destination lists should be saved with a \".lst\" extension on the \"lists\" directory, read the README.md file
     on the directory to know more about this files.
 
     You could find the reports on the \"reports\" directory with a format \"SummaryReportMMDDYYYYHHMM.txt\" and if your
