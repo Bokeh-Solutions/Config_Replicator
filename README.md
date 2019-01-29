@@ -24,7 +24,7 @@ but in Windows can pose a challenge, Google search can help you to find some inf
 Because the libraries used by this tool are multiplatform the tool is multiplatform
 
 ## How it works
-The process flow is really simple and can be divided in teh following steps:
+The process flow is really simple and can be divided in the following steps:
     - Select the script file with the commands to send to the devices
     - Select the list file with the files where the script file need to be sent
     - Specify the number of threads to use, this will speed up the process because it can use the waiting times while 
