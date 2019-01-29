@@ -1,10 +1,10 @@
 import os
 import re
 import sys
-import Queue
+import queue
 import logging
 import getpass
-import ConfigParser
+import configparser
 import datetime
 
 from libs import menu
@@ -18,7 +18,7 @@ def help_arg():
     """
     Function to print help
     """
-    print 'To enable the debug use the directive -d, use --help for help'
+    print('To enable the debug use the directive -d, use --help for help')
 
 
 def welcome():
@@ -50,8 +50,8 @@ def welcome():
         ' Enter the Enable password if requested
     """
     clear()
-    print welcome_string
-    raw_input('Press any key to continue.')
+    print(welcome_string)
+    input('Press any key to continue.')
 
 
 def clear():
@@ -98,7 +98,7 @@ if __name__ == "__main__":
 
     #Parsing config file for the menus parameters
     logger.debug('Parsing the configuration file')
-    configure = ConfigParser.ConfigParser()
+    configure = configparser.ConfigParser()
     configure.read('config.ini')
     #Use Enable?
     use_enable = configure.get('enable', 'use_enable').replace("\'", "").lower()
@@ -207,9 +207,9 @@ if __name__ == "__main__":
             clear()
 
             #Take input user to take action over script
-            print 'You selected the script \"%s\"' % resp_script[1]
-            print 'What do you want to do next?'
-            r = raw_input('(C)ontinue, (V)iew, (R)eturn, (Q)uit: ')
+            print('You selected the script \"%s\"' % resp_script[1])
+            print('What do you want to do next?')
+            r = input('(C)ontinue, (V)iew, (R)eturn, (Q)uit: ')
 
             #Make decision about selection
             if r.lower() == 'c':
@@ -219,14 +219,14 @@ if __name__ == "__main__":
                 os.chdir('scripts')
                 fd = open(resp_script[1], 'r')
                 os.chdir('..')
-                print resp_script[1]
-                print "="*len(resp_script[1])
+                print(resp_script[1])
+                print("="*len(resp_script[1]))
                 for line in fd:
-                    print line.strip('\n')
+                    print(line.strip('\n'))
                 print
-                print '-'*70
+                print('-'*70)
                 fd.close()
-                raw_input('Press any key to continue')
+                input('Press any key to continue')
             elif r.lower() == 'r':
                 break
             elif r.lower() == 'q':
@@ -248,9 +248,9 @@ if __name__ == "__main__":
             clear()
 
             #Take input user to take action over list
-            print 'The selected script \"%s\" will be send to the destination list \"%s\"' % (resp_script[1], resp_list[1])
-            print 'How many threads do you want to have? '
-            threads = raw_input('Enter a number or (R)eturn, (Q)uit: ')
+            print('The selected script \"{}\" will be send to the destination list \"{}\"'.format(resp_script[1], resp_list[1]))
+            print('How many threads do you want to have? ')
+            threads = input('Enter a number or (R)eturn, (Q)uit: ')
 
             #Make a decision about the selection
             if threads.lower() == 'q':
@@ -272,15 +272,15 @@ if __name__ == "__main__":
 
     #Ask for username and password
     clear()
-    print 'Enter the credentials to login into the devices.'
-    username = raw_input('Username: ')
+    print('Enter the credentials to login into the devices.')
+    username = input('Username: ')
     password = getpass.getpass('Password: ')
 
     #Ask for enable password
     if use_enable == 'yes':
         clear()
-        print 'You selected the use of enable password in the config.ini section [enable]'
-        print 'Enter the enable password'
+        print('You selected the use of enable password in the config.ini section [enable]')
+        print('Enter the enable password')
         enable_password = getpass.getpass('Enable password: ')
     else:
         enable_password = ''
@@ -289,24 +289,24 @@ if __name__ == "__main__":
     r = ' '
     while r.lower() != 'y':
         clear()
-        print """################
+        print("""################
 #   WARNING!   #
 ################
-After this screen you will use the credentials entered before to send the script \"%s\" to each device saved on the
-destination list \"%s\", using %i threads
-        """ % (resp_script[1], resp_list[1], threads)
-        print '-' * 70
-        r = raw_input('Are you sure you want to continue? (Y)es/(N)o: ')
+After this screen you will use the credentials entered before to send the script \"{}\" to each device saved on the
+destination list \"{}\", using {} threads
+        """.format(resp_script[1], resp_list[1], threads))
+        print('-' * 70)
+        r = input('Are you sure you want to continue? (Y)es/(N)o: ')
 
         if r.lower() == 'n':
             sys.exit(0)
 
     #Create all the queues
     logger.debug('Creating the queues')
-    destination_queue = Queue.Queue()
-    err_queue = Queue.Queue()
-    succ_queue = Queue.Queue()
-    output_queue = Queue.Queue()
+    destination_queue = queue.Queue()
+    err_queue = queue.Queue()
+    succ_queue = queue.Queue()
+    output_queue = queue.Queue()
 
     #Set the Beginning time
     begin_time = datetime.datetime.now()
