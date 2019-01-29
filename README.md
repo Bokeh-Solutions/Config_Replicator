@@ -19,7 +19,7 @@ devices with telnet and ssh respectively.
 ## Pre-Requisites
 If the gui needs to be used PyQT4 should be installed. PyQT4 should be compiled from the sources and can be downloaded from [here](https://www.riverbankcomputing.com/software/pyqt/download)
 Also paramiko should be installed if ssh is needed to connect to the devices, in linux is easy to install the library,
-but in Windows can present a challenge, Google search can help you to find some information about this.
+but in Windows can pose a challenge, Google search can help you to find some information about this.
 
 Because the libraries used by this tool are multiplatform the tool is multiplatform
 
@@ -27,7 +27,8 @@ Because the libraries used by this tool are multiplatform the tool is multiplatf
 The process flow is really simple and can be divided in teh following steps:
     - Select the script file with the commands to send to the devices
     - Select the list file with the files where the script file need to be sent
-    - Specify the number of threads to use, this will speed up the process because it can use the waiting times while conencting
+    - Specify the number of threads to use, this will speed up the process because it can use the waiting times while 
+    conencting
     or waiting for output from the device efficiently
     - Specify the credentials to use 
     - Wait until the process is complete
