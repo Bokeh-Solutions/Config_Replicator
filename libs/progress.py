@@ -1,4 +1,4 @@
-import ConfigParser
+import configparser
 import threading
 import time
 
@@ -27,7 +27,7 @@ class Progress (threading.Thread):
         """
         Progress printing function
         """
-        config = ConfigParser.ConfigParser()
+        config = configparser.ConfigParser()
 
         #Parse the configuration file
         self.logger.debug('Parsing the configuration file')
@@ -41,10 +41,10 @@ class Progress (threading.Thread):
             content = ' Connecting Progress: %.2f%% ' % progress
             tot_len = len(content) + 2
             print
-            print '+' + '-' * tot_len + '+'
-            print '| ' + title + ' ' * (tot_len - len(title) - 1) + '|'
-            print '| ' + content + ' |'
-            print '+' + '-' * tot_len + '+'
+            print('+' + '-' * tot_len + '+')
+            print('| ' + title + ' ' * (tot_len - len(title) - 1) + '|')
+            print('| ' + content + ' |')
+            print('+' + '-' * tot_len + '+')
             print
 
 __author__ = 'Miguel Ercolino'

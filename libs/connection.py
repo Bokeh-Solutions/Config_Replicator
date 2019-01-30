@@ -1,6 +1,6 @@
 import telnetlib
 import threading
-import ConfigParser
+import configparser
 import re
 import logging
 
@@ -9,15 +9,15 @@ try:
 
     paramiko_error = False
 except ImportError as e:
-    print """##############
+    print("""##############
 #   Warning  #
 ##############
 There was a problem importing the python library \"Paramiko\" without this library it will not be possible to connect
 to devices using SSH
-"""
-    print 'Error: %s' % e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror
-    print '-' * 70
-    raw_input('Press any key to continue.')
+""")
+    print('Error: %s' % str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + str(e))
+    print('-' * 70)
+    input('Press any key to continue.')
     paramiko_error = True
 
 
@@ -70,11 +70,12 @@ class Connection(threading.Thread):
         self.logger = logger
         self.handler = handler
 
+
     def run(self):
         """
         Connection Function
         """
-        config = ConfigParser.ConfigParser()
+        config = configparser.ConfigParser()
 
         # TODO: Find solution to errors accessing config file, adding confiuration into a queue and create adirectory on each process created
 
@@ -109,9 +110,9 @@ class Connection(threading.Thread):
                     telnet = telnetlib.Telnet(ip, 23, timeout=telnet_tout)
                 except Exception as e:
                     self.logger.info('There was a problem connecting to %s with error %s' % (
-                        ip, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        ip, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + str(e)))
                     self.q_error.put(
-                        (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + str(e)))
                     self.q_dest.task_done()
                     continue
 
@@ -126,7 +127,7 @@ class Connection(threading.Thread):
                         continue
                 except Exception as e:
                     self.q_error.put(
-                        (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + str(e)))
                     self.q_dest.task_done()
                     continue
 
@@ -141,7 +142,7 @@ class Connection(threading.Thread):
                         continue
                 except Exception as e:
                     self.q_error.put(
-                        (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + str(e)))
                     telnet.close()
                     self.q_dest.task_done()
                     continue
@@ -155,7 +156,7 @@ class Connection(threading.Thread):
                             telnet.write('\n')
                     except Exception as e:
                         self.q_error.put(
-                            (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                            (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + str(e)))
                         telnet.close()
                         self.q_dest.task_done()
                         continue
@@ -168,7 +169,7 @@ class Connection(threading.Thread):
                             telnet.write('\n')
                     except Exception as e:
                         self.q_error.put(
-                            (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                            (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + str(e)))
                         telnet.close()
                         self.q_dest.task_done()
                         continue
@@ -205,7 +206,7 @@ class Connection(threading.Thread):
                             continue
                     except Exception as e:
                         self.q_error.put(
-                            (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                            (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + str(e)))
                         telnet.close()
                         self.q_dest.task_done()
                         continue
@@ -273,7 +274,7 @@ class Connection(threading.Thread):
 
                 except Exception as e:
                     self.q_error.put(
-                        (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + str(e)))
                     telnet.close()
                     self.q_dest.task_done()
                     continue
@@ -296,9 +297,9 @@ class Connection(threading.Thread):
                         client.connect(ip, port=22, username=self.user, password=self.pwd, timeout=ssh_tout)
                     except Exception as e:
                         self.logger.info('There was a problem connecting to %s with error %s' % (
-                            ip, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                            ip, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + str(e)))
                         self.q_error.put(
-                            (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                            (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + str(e)))
                         self.q_dest.task_done()
                         continue
 
@@ -310,7 +311,7 @@ class Connection(threading.Thread):
                     enable_ssh = False
                     while True:
                         resp = chan.recv(9999)
-                        buff += resp
+                        buff += resp.decode('utf-8')
                         if re.search(ssh_device_enable_prompt, buff):
                             enable_ssh = True
                             break
@@ -332,7 +333,7 @@ class Connection(threading.Thread):
                         #Capturing response buffer
                         while True:
                             resp = chan.recv(9999)
-                            buff += resp
+                            buff += resp.decode('utf-8')
                             if re.search(ssh_device_prompt, buff):
                                 break
                             for pwd_prompt in password_prompts:
@@ -342,7 +343,7 @@ class Connection(threading.Thread):
                                     #Capturing response buffer
                                     while not re.search(ssh_device_prompt, buff):
                                         resp = chan.recv(9999)
-                                        buff += resp
+                                        buff += resp.decode('utf8')
                                     break
                             if match:
                                 break
@@ -354,7 +355,7 @@ class Connection(threading.Thread):
                         #Capturing response buffer
                         while not re.search(ssh_device_prompt, buff):
                             resp = chan.recv(9999)
-                            buff += resp
+                            buff += resp.decode('utf-8')
 
                     resp_out = ''
                     #Sending Commands
@@ -364,7 +365,7 @@ class Connection(threading.Thread):
                         #Capturing response buffer
                         while not re.search(ssh_device_prompt, buff):
                             resp = chan.recv(9999)
-                            buff += resp
+                            buff += resp.decode('utf-8')
                         #Creating string with all result commands for output
                         if self.out:
                             resp_out = resp_out + buff + '\n' + '-' * 70 + '\n'
@@ -385,7 +386,7 @@ class Connection(threading.Thread):
                         #Capturing response buffer
                         while not re.search(ssh_device_prompt, buff):
                             resp = chan.recv(9999)
-                            buff += resp
+                            buff += resp.decode('utf-8')
                         self.q_out.put((ip, name, resp_out))
 
                     self.q_succ.put((ip, name))
