@@ -89,7 +89,7 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
         Function to run when the Load Script button is clicked
         """
         fname = QFileDialog.getOpenFileName(self, 'Open File', directory='scripts/', filter='Script (*.src)')
-        if fname != '':
+        if fname[0] != '':
             self.scriptTextEdit.setEnabled(True)
             filename = re.search('(.*)[\\|\/](.+\.src)', fname[0]).group(2)
             f = open(fname[0], 'r')
@@ -99,6 +99,8 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
             self.scriptNameLabel.setText(filename)
             self.statusbar.showMessage('Selected script {fname}'.format(fname=fname[0]), 2000)
             self.commands = self.getCommands(fname[0])
+            self.saveScriptPushButton.setEnabled(False)
+            self.updateUi()
 
         self.saveScriptPushButton.setEnabled(False)
         self.updateUi()
@@ -109,7 +111,7 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
         Function to run when the Save Script is clicked
         """
         fname = QFileDialog.getSaveFileName(self, 'Save File', directory='scripts/', filter='Script (*.src)')
-        if fname != '':
+        if fname[0] != '':
             f = open(fname[0], 'w')
             f.write(self.scriptTextEdit.toPlainText())
             f.close()
@@ -117,7 +119,16 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
             self.scriptNameLabel.setText(filename)
             self.saveScriptPushButton.setEnabled(False)
             self.statusbar.showMessage('Saved script {fname}'.format(fname=fname[0]), 2000)
+            self.scriptTextEdit.setEnabled(True)
+            f = open(fname[0], 'r')
+            self.scriptTextEdit.setPlainText(f.read())
+            f.close()
+            self.script_selected = True
+            self.scriptNameLabel.setText(filename)
+            self.statusbar.showMessage('Selected script {fname}'.format(fname=fname[0]), 2000)
             self.commands = self.getCommands(fname[0])
+        else:
+            self.saveScriptPushButton.setEnabled(self.saveScriptPushButton.isEnabled())
 
     @pyqtSlot()
     def on_listPushButton_clicked(self):
@@ -125,7 +136,7 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
         Function to run when the Load Destination List is clicked
         """
         fname = QFileDialog.getOpenFileName(self, 'Open File', directory='lists/', filter='List (*.lst)')
-        if fname != '':
+        if fname[0] != '':
             self.listTextEdit.setEnabled(True)
             filename = re.search('(.*)[\\|\/](.+\.lst)', fname[0]).group(2)
             f = open(fname[0], 'r')
@@ -145,15 +156,23 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
         Function to run when the Save Destination List is clicked
         """
         fname = QFileDialog.getSaveFileName(self, 'Save File', directory='lists/', filter='List (*.lst)')
-        if fname != '':
-            f = open(fname, 'w')
+        if fname[0] != '':
+            f = open(fname[0], 'w')
             f.write(self.listTextEdit.toPlainText())
             f.close()
-            filename = re.search('(.*)[\\|\/](.+\.lst)', fname).group(2)
+            filename = re.search('(.*)[\\|\/](.+\.lst)', fname[0]).group(2)
             self.listNameLabel.setText(filename)
             self.saveListPushButton.setEnabled(False)
-            self.statusbar.showMessage('Saved Destination List %s' % fname, 2000)
-            self.destinations = self.getDevices(fname)
+            self.statusbar.showMessage('Saved Destination List {fname}'.format(fname=fname[0]), 2000)
+            f = open(fname[0], 'r')
+            self.listTextEdit.setPlainText(f.read())
+            f.close()
+            self.list_selected = True
+            self.listNameLabel.setText(filename)
+            self.statusbar.showMessage('Selected List {fname}'.format(fname=fname[0]), 2000)
+            self.destinations = self.getDevices(fname[0])
+        else:
+            self.saveListPushButton.setEnabled(self.saveListPushButton.isEnabled())
 
     @pyqtSlot()
     def on_actionSettings_triggered(self):
@@ -263,7 +282,7 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
         fd = open(fname, 'r')
         ip_regex = re.compile('[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+')
         destinations = []
-        for line in fd:
+        for line in fd.readlines():
             if re.match(ip_regex, line):
                 param = line.split(' ')
                 #Processing IP Address
@@ -359,5 +378,3 @@ if __name__ == "__main__":
 
     form.show()
     app.exec_()
-
-__author__ = 'Miguel Ercolino'

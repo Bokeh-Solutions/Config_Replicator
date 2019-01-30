@@ -155,4 +155,3 @@ class monitoringDlg(QDialog, monitoring.Ui_monitoringDialog):
         else:
             evnt.ignore()
 
-__author__ = 'Miguel Ercolino'

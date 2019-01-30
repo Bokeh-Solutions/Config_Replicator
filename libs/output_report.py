@@ -56,4 +56,3 @@ class OutputReport (threading.Thread):
             self.q_out.task_done()
         fd.close()
 
-__author__ = 'Miguel Ercolino'

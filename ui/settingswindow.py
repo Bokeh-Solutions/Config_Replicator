@@ -7,9 +7,11 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import os
 
 class Ui_SettingsWindow(object):
     def setupUi(self, SettingsWindow):
+        path = os.path.dirname(os.path.abspath(__file__))
         SettingsWindow.setObjectName("SettingsWindow")
         SettingsWindow.resize(640, 475)
         SettingsWindow.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
@@ -33,27 +35,27 @@ class Ui_SettingsWindow(object):
         SettingsWindow.addToolBar(QtCore.Qt.LeftToolBarArea, self.toolBar)
         self.actionSettingsSave = QtWidgets.QAction(SettingsWindow)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("save.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(os.path.join(path,"save.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionSettingsSave.setIcon(icon)
         self.actionSettingsSave.setObjectName("actionSettingsSave")
         self.actionSettingsClose = QtWidgets.QAction(SettingsWindow)
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("exit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(os.path.join(path,"exit.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionSettingsClose.setIcon(icon1)
         self.actionSettingsClose.setObjectName("actionSettingsClose")
         self.actionSettingsEdit = QtWidgets.QAction(SettingsWindow)
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("edit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(os.path.join(path,"edit.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionSettingsEdit.setIcon(icon2)
         self.actionSettingsEdit.setObjectName("actionSettingsEdit")
         self.actionSettingsUndo = QtWidgets.QAction(SettingsWindow)
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("undo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(os.path.join(path,"undo.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionSettingsUndo.setIcon(icon3)
         self.actionSettingsUndo.setObjectName("actionSettingsUndo")
         self.actionSettingsRedo = QtWidgets.QAction(SettingsWindow)
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("Redo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap(os.path.join(path,"Redo.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionSettingsRedo.setIcon(icon4)
         self.actionSettingsRedo.setObjectName("actionSettingsRedo")
         self.toolBar.addAction(self.actionSettingsSave)

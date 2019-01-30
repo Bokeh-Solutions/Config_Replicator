@@ -7,9 +7,11 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import os
 
 class Ui_helpWindow(object):
     def setupUi(self, helpWindow):
+        path = os.path.dirname(os.path.abspath(__file__))
         helpWindow.setObjectName("helpWindow")
         helpWindow.resize(640, 480)
         helpWindow.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
@@ -17,7 +19,7 @@ class Ui_helpWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName("gridLayout")
-        self.helpWebView = QtWebEngineWidgets.QWebView(self.centralwidget)
+        self.helpWebView = QtWebEngineWidgets.QWebEngineView(self.centralwidget)
         self.helpWebView.setUrl(QtCore.QUrl("about:blank"))
         self.helpWebView.setObjectName("helpWebView")
         self.gridLayout.addWidget(self.helpWebView, 0, 0, 1, 1)
@@ -28,7 +30,7 @@ class Ui_helpWindow(object):
         helpWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
         self.actionClose = QtWidgets.QAction(helpWindow)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("exit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(os.path.join(path, "exit.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionClose.setIcon(icon)
         self.actionClose.setObjectName("actionClose")
         self.toolBar.addAction(self.actionClose)

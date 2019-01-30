@@ -419,7 +419,7 @@
     <string>Reports</string>
    </property>
    <property name="toolTip">
-    <string>Resports</string>
+    <string>Reports</string>
    </property>
   </action>
   <action name="actionSettings">

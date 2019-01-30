@@ -107,5 +107,3 @@ def summary_report(init_time, fin_time, user, script, lst, thr, tot_dev, q_err, 
         fd.close()
 
     return file_name
-
-__author__ = 'Miguel Ercolino'

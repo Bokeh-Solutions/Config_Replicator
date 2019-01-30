@@ -125,24 +125,24 @@ class Menu:
         """
         last_page = self.__items.keys()[-1]
         total_col = self.__num_col + self.__item_col + self.__desc_col + 2
-        print '+' + total_col * '-' + '+'
+        print('+' + total_col * '-' + '+')
         #Print Title
-        print '|' + self.menu_title[:total_col] + (total_col - len(self.menu_title)) * ' ' + '|'
+        print('|' + self.menu_title[:total_col] + (total_col - len(self.menu_title)) * ' ' + '|')
         #Print Subtitle if Exists
         if self.menu_subtitle:
-            print '+' + total_col * '-' + '+'
-            print '|' + self.menu_subtitle[:total_col] + (total_col - len(self.menu_subtitle)) * ' ' + '|'
+            print('+' + total_col * '-' + '+')
+            print('|' + self.menu_subtitle[:total_col] + (total_col - len(self.menu_subtitle)) * ' ' + '|')
             #Change the boundary if there are previous pages to arrows
             if (page - 1) in self.__items.keys():
-                print '^' + total_col * '^' + '^'
+                print('^' + total_col * '^' + '^')
             else:
-                print '+' + total_col * '-' + '+'
+                print('+' + total_col * '-' + '+')
         else:
             #Change the boundary if there are previous pages to arrows
             if (page - 1) in self.__items.keys():
-                print '^' + total_col * '^' + '^'
+                print('^' + total_col * '^' + '^')
             else:
-                print '+' + total_col * '-' + '+'
+                print('+' + total_col * '-' + '+')
         #Print the page of the menu
         if self.__items:
             j = 1
@@ -150,25 +150,25 @@ class Menu:
                 menu_line = '|' + i[0][:self.__num_col] + (self.__num_col - len(i[0])) * ' ' + '|'
                 menu_line = menu_line + ' ' + i[1][:self.__item_col - 1] + (self.__item_col - len(i[1]) - 1) * ' ' + '|'
                 menu_line = menu_line + ' ' + i[2][:self.__desc_col - 1] + (self.__desc_col - len(i[2]) - 1) * ' ' + '|'
-                print menu_line
+                print(menu_line)
                 j += 1
             #Change the boundary if there are following pages to arrows
             if (page + 1) in self.__items.keys():
-                print 'v' + total_col * 'v' + 'v'
+                print('v' + total_col * 'v' + 'v')
             else:
-                print '+' + total_col * '-' + '+'
+                print('+' + total_col * '-' + '+')
         #Print Navigation Instructions at the left and current page and total number of pages at the right
         if ((page + 1) in self.__items.keys()) and ((page - 1) in self.__items.keys()):
-            print 'n: next p: previous q: quit' + ' ' * (total_col - 27 - 14 + 2) + '#page %02d of %02d' % (
-                self.curr_page, last_page)
+            print('n: next p: previous q: quit' + ' ' * (total_col - 27 - 14 + 2) + '#page %02d of %02d' % (
+                self.curr_page, last_page))
         elif ((page + 1) in self.__items.keys()) and not ((page - 1) in self.__items.keys()):
-            print 'n: next q: quit' + ' ' * (total_col - 15 - 14 + 2) + '#page %02d of %02d' % (
-                self.curr_page, last_page)
+            print('n: next q: quit' + ' ' * (total_col - 15 - 14 + 2) + '#page %02d of %02d' % (
+                self.curr_page, last_page))
         elif not ((page + 1) in self.__items.keys()) and ((page - 1) in self.__items.keys()):
-            print 'p: previous q: quit' + ' ' * (total_col - 19 - 14 + 2) + '#page %02d of %02d' % (
-                self.curr_page, last_page)
+            print('p: previous q: quit' + ' ' * (total_col - 19 - 14 + 2) + '#page %02d of %02d' % (
+                self.curr_page, last_page))
         else:
-            print 'q: quit' + ' ' * (total_col - 7 - 14 + 2) + '#page %02d of %02d' % (self.curr_page, last_page)
+            print('q: quit' + ' ' * (total_col - 7 - 14 + 2) + '#page %02d of %02d' % (self.curr_page, last_page))
 
     def __clear(self):
         """
@@ -206,7 +206,7 @@ class Menu:
         #Clear terminal, print the first page and wait for input user
         self.__clear()
         self.print_page(self.curr_page)
-        resp = raw_input(self.prompt)
+        resp = input(self.prompt)
 
         #Private list with the item numbers available on the current page
         item_numbers = []
@@ -229,8 +229,8 @@ class Menu:
             self.print_page(self.curr_page)
             #Print the error if exists
             if error:
-                print '##Error## Please select a number from the menu'
-            resp = raw_input(self.prompt)
+                print('##Error## Please select a number from the menu')
+            resp = input(self.prompt)
             #Navigation Decisions
             if resp == 'p':
                 self.__previous_page()
@@ -250,10 +250,3 @@ class Menu:
         return (self.__items[self.curr_page][int(resp) - (self.len_page * (self.curr_page - 1)) - 1][0],
                 self.__items[self.curr_page][int(resp) - (self.len_page * (self.curr_page - 1)) - 1][1],
                 self.__items[self.curr_page][int(resp) - (self.len_page * (self.curr_page - 1)) - 1][2])
-
-
-__author__ = "Miguel Ercolino"
-__copyright__ = "Copyright 2014"
-__credits__ = ["Miguel Ercolino"]
-__version__ = "1.0.0"
-__maintainer__ = "Miguel Ercolino"

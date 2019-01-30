@@ -7,9 +7,11 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import os
 
 class Ui_ReportsWindow(object):
     def setupUi(self, ReportsWindow):
+        path = os.path.dirname(os.path.abspath(__file__))
         ReportsWindow.setObjectName("ReportsWindow")
         ReportsWindow.resize(640, 480)
         ReportsWindow.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
@@ -59,7 +61,7 @@ class Ui_ReportsWindow(object):
         ReportsWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
         self.actionClose = QtWidgets.QAction(ReportsWindow)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("exit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(os.path.join(path, "exit.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionClose.setIcon(icon)
         self.actionClose.setObjectName("actionClose")
         self.toolBar.addAction(self.actionClose)

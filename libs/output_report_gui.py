@@ -61,4 +61,3 @@ class OutputReport (QThread):
         self.emit(SIGNAL('output_report(QString)'), file_name)
         self.finish = True
 
-__author__ = 'Miguel Ercolino'

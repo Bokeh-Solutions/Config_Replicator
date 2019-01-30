@@ -374,5 +374,3 @@ class connectDevices(QThread):
                     self.q_dest.task_done()
                     self.emit(pyqtSignal('err_conn'))
         self.finish = True
-
-__author__ = 'Miguel Ercolino'

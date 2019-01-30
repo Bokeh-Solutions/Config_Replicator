@@ -1,6 +1,6 @@
 import telnetlib
 import threading
-import ConfigParser
+import configparser
 import re
 import logging
 
@@ -9,15 +9,15 @@ try:
 
     paramiko_error = False
 except ImportError as e:
-    print """##############
+    print("""##############
 #   Warning  #
 ##############
 There was a problem importing the python library \"Paramiko\" without this library it will not be possible to connect
 to devices using SSH
-"""
-    print 'Error: %s' % e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror
-    print '-' * 70
-    raw_input('Press any key to continue.')
+""")
+    print('Error: %s' % e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror)
+    print('-' * 70)
+    input('Press any key to continue.')
     paramiko_error = True
 
 
@@ -74,7 +74,7 @@ class Connection(threading.Thread):
         """
         Connection Function
         """
-        config = ConfigParser.ConfigParser()
+        config = configparser.ConfigParser()
 
         # TODO: Find solution to errors accessing config file, adding confiuration into a queue and create adirectory on each process created
 
@@ -398,5 +398,3 @@ class Connection(threading.Thread):
                         (ip, name, mode, "Paramiko library not installed, SSH connections are not possible"))
                     self.q_dest.task_done()
 
-
-__author__ = 'Miguel Ercolino'

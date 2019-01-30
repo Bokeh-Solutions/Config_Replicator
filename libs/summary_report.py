@@ -105,7 +105,3 @@ def summary_report(init_time, fin_time, user, script, lst, thr, tot_dev, q_err, 
             succ = q_succ.get()
             fd.write('%s\t-->\t%s\n' % (succ[0], succ[1]))
         fd.close()
-
-
-
-__author__ = 'Miguel Ercolino'

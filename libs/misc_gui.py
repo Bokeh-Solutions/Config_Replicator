@@ -130,5 +130,3 @@ class credentialDlg(QDialog, credentials.Ui_Dialog):
         Function to run when the Ok Button is clicked
         """
         self.emit(pyqtSignal('QString', 'QString', name='credentials'), self.usernameLineEdit.text(), self.passwordLineEdit.text())
-
-__author__ = 'Miguel Ercolino'
