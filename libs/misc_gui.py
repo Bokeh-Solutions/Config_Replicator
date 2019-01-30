@@ -1,5 +1,6 @@
-from PyQt4.QtGui import *
-from PyQt4.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
 import os
 
 from ui import credentials
@@ -64,12 +65,12 @@ class enableDlg(QDialog, enable.Ui_enableDialog):
         super(enableDlg, self).__init__(parent)
         self.setupUi(self)
 
-    @pyqtSignature("")
+    @pyqtSlot()
     def on_enableButtonBox_accepted(self):
         """
         Function to run when the Ok Button is clicked
         """
-        self.emit(SIGNAL('enable(QString)'), self.enableLineEdit.text())
+        self.emit(pyqtSignal('QString', name='enable'), self.enableLineEdit.text())
 
 
 class settingsWindow(QMainWindow, settingswindow.Ui_SettingsWindow):
@@ -86,7 +87,7 @@ class settingsWindow(QMainWindow, settingswindow.Ui_SettingsWindow):
         self.statusbar.showMessage('config.ini')
         self.actionSettingsSave.setEnabled(False)
 
-    @pyqtSignature("")
+    @pyqtSlot()
     def on_actionSettingsEdit_triggered(self):
         """
         Function to run when the Edit button is pressed in the toolbar
@@ -95,7 +96,7 @@ class settingsWindow(QMainWindow, settingswindow.Ui_SettingsWindow):
         self.settingsTextEdit.setReadOnly(False)
         self.statusbar.showMessage('Editing config.ini')
 
-    @pyqtSignature("")
+    @pyqtSlot()
     def on_actionSettingsSave_triggered(self):
         """
         Function to run when the Save button is pressed in the toolbar
@@ -107,7 +108,7 @@ class settingsWindow(QMainWindow, settingswindow.Ui_SettingsWindow):
         self.settingsTextEdit.setReadOnly(True)
         self.statusbar.showMessage('config.ini Saved...')
 
-    @pyqtSignature("")
+    @pyqtSlot()
     def on_settingsTextEdit_textChanged(self):
         """
         Function to run when the text change
@@ -123,11 +124,11 @@ class credentialDlg(QDialog, credentials.Ui_Dialog):
         super(credentialDlg, self).__init__(parent)
         self.setupUi(self)
 
-    @pyqtSignature("")
+    @pyqtSlot()
     def on_buttonBox_accepted(self):
         """
         Function to run when the Ok Button is clicked
         """
-        self.emit(SIGNAL('credentials(QString, QString)'), self.usernameLineEdit.text(), self.passwordLineEdit.text())
+        self.emit(pyqtSignal('QString', 'QString', name='credentials'), self.usernameLineEdit.text(), self.passwordLineEdit.text())
 
 __author__ = 'Miguel Ercolino'

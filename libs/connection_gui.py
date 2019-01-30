@@ -1,9 +1,9 @@
 import telnetlib
-import ConfigParser
+import configparser
 import logging
 import re
 
-from PyQt4.QtCore import *
+from PyQt5.QtCore import *
 
 
 try:
@@ -58,7 +58,7 @@ class connectDevices(QThread):
         """
         Connection Function
         """
-        config = ConfigParser.ConfigParser()
+        config = configparser.ConfigParser()
 
         #Parse the configuration file
         config.read('config.ini')
@@ -90,7 +90,7 @@ class connectDevices(QThread):
                 except Exception as e:
                     self.q_error.put((ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     self.q_dest.task_done()
-                    self.emit(SIGNAL('err_conn'))
+                    self.emit(pyqtSignal('err_conn'))
                     continue
 
                 #Sending Username
@@ -101,12 +101,12 @@ class connectDevices(QThread):
                         self.q_error.put((ip, name, mode, 'Problem matching username prompt'))
                         telnet.close()
                         self.q_dest.task_done()
-                        self.emit(SIGNAL('err_conn'))
+                        self.emit(pyqtSignal('err_conn'))
                         continue
                 except Exception as e:
                     self.q_error.put((ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     self.q_dest.task_done()
-                    self.emit(SIGNAL('err_conn'))
+                    self.emit(pyqtSignal('err_conn'))
                     continue
 
                 #Sending Password
@@ -117,13 +117,13 @@ class connectDevices(QThread):
                         self.q_error.put((ip, name, mode, 'Problem matching password prompt'))
                         telnet.close()
                         self.q_dest.task_done()
-                        self.emit(SIGNAL('err_conn'))
+                        self.emit(pyqtSignal('err_conn'))
                         continue
                 except Exception as e:
                     self.q_error.put((ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     telnet.close()
                     self.q_dest.task_done()
-                    self.emit(SIGNAL('err_conn'))
+                    self.emit(pyqtSignal('err_conn'))
                     continue
 
                 if enable == 'yes':
@@ -137,7 +137,7 @@ class connectDevices(QThread):
                         self.q_error.put((ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         telnet.close()
                         self.q_dest.task_done()
-                        self.emit(SIGNAL('err_conn'))
+                        self.emit(pyqtSignal('err_conn'))
                         continue
 
                     #Sending password if ask for it
@@ -150,7 +150,7 @@ class connectDevices(QThread):
                         self.q_error.put((ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         telnet.close()
                         self.q_dest.task_done()
-                        self.emit(SIGNAL('err_conn'))
+                        self.emit(pyqtSignal('err_conn'))
                         continue
 
                     try:
@@ -163,13 +163,13 @@ class connectDevices(QThread):
                         if error:
                             telnet.close()
                             self.q_dest.task_done()
-                            self.emit(SIGNAL('err_conn'))
+                            self.emit(pyqtSignal('err_conn'))
                             continue
                     except Exception as e:
                         self.q_error.put((ip, name, mode, 'There was a problem matching the device prompt'))
                         telnet.close()
                         self.q_dest.task_done()
-                        self.emit(SIGNAL('err_conn'))
+                        self.emit(pyqtSignal('err_conn'))
                         continue
 
                 else:
@@ -184,13 +184,13 @@ class connectDevices(QThread):
                         if error:
                             telnet.close()
                             self.q_dest.task_done()
-                            self.emit(SIGNAL('err_conn'))
+                            self.emit(pyqtSignal('err_conn'))
                             continue
                     except Exception as e:
                         self.q_error.put((ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         telnet.close()
                         self.q_dest.task_done()
-                        self.emit(SIGNAL('err_conn'))
+                        self.emit(pyqtSignal('err_conn'))
                         continue
 
                 try:
@@ -248,19 +248,19 @@ class connectDevices(QThread):
                         self.q_error.put((ip, name, mode, "There was a problem matching the device prompt"))
                         telnet.close()
                         self.q_dest.task_done()
-                        self.emit(SIGNAL('err_conn'))
+                        self.emit(pyqtSignal('err_conn'))
                         continue
 
                     self.q_succ.put((ip, name))
                     telnet.close()
                     self.q_dest.task_done()
-                    self.emit(SIGNAL('succ_conn'))
+                    self.emit(pyqtSignal('succ_conn'))
 
                 except Exception as e:
                     self.q_error.put((ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     telnet.close()
                     self.q_dest.task_done()
-                    self.emit(SIGNAL('err_conn'))
+                    self.emit(pyqtSignal('err_conn'))
                     continue
 
             #Processing a ssh device
@@ -277,7 +277,7 @@ class connectDevices(QThread):
                     except Exception as e:
                         self.q_error.put((ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) +'] ' + e.strerror))
                         self.q_dest.task_done()
-                        self.emit(SIGNAL('err_conn'))
+                        self.emit(pyqtSignal('err_conn'))
                         continue
 
                     #Starting interactive shell
@@ -299,7 +299,7 @@ class connectDevices(QThread):
                         self.q_error.put((ip, name, mode, 'SSH Error device ask for enable password and enable not configured in config.ini section [enable]'))
                         client.close()
                         self.q_dest.task_done()
-                        self.emit(SIGNAL('err_conn'))
+                        self.emit(pyqtSignal('err_conn'))
                         continue
 
                     #Sending enable command
@@ -368,11 +368,11 @@ class connectDevices(QThread):
                     self.q_succ.put((ip, name))
                     client.close()
                     self.q_dest.task_done()
-                    self.emit(SIGNAL('succ_conn'))
+                    self.emit(pyqtSignal('succ_conn'))
                 else:
                     self.q_error.put((ip, name, mode, "Paramiko library not installed, SSH connections are not possible"))
                     self.q_dest.task_done()
-                    self.emit(SIGNAL('err_conn'))
+                    self.emit(pyqtSignal('err_conn'))
         self.finish = True
 
 __author__ = 'Miguel Ercolino'

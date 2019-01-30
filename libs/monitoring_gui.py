@@ -1,8 +1,9 @@
-from PyQt4.QtGui import *
-from PyQt4.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
 import time
 import datetime
-import Queue
+import queue
 
 from libs import connection_gui as conn
 from libs import summary_report_gui as sr
@@ -52,10 +53,10 @@ class monitoringDlg(QDialog, monitoring.Ui_monitoringDialog):
         """
         Function to start the Threads
         """
-        destination_queue = Queue.Queue()
-        err_queue = Queue.Queue()
-        succ_queue = Queue.Queue()
-        output_queue = Queue.Queue()
+        destination_queue = queue.Queue()
+        err_queue = queue.Queue()
+        succ_queue = queue.Queue()
+        output_queue = queue.Queue()
 
         for dest in self.dest_list:
             destination_queue.put(dest)
@@ -63,14 +64,14 @@ class monitoringDlg(QDialog, monitoring.Ui_monitoringDialog):
         for i in range(self.th_number):
             self.thread = conn.connectDevices(destination_queue, err_queue, output_queue, succ_queue, self.user, self.pwd, self.en_pwd, self.com_list, self.out, parent=self)
             self.threads.append(self.thread)
-            self.connect(self.thread, SIGNAL('succ_conn'), self.update_succ_conn)
-            self.connect(self.thread, SIGNAL('err_conn'), self.update_err_conn)
+            self.connect(self.thread, pyqtSignal('succ_conn'), self.update_succ_conn)
+            self.connect(self.thread, pyqtSignal('err_conn'), self.update_err_conn)
             self.thread.start()
 
          #Start an output report thread
         if self.out:
             output_thread = out.OutputReport(destination_queue, output_queue, self.monitoringScriptLabel.text(), self.monitoringListLabel.text())
-            output_thread.connect(output_thread, SIGNAL('output_report(QString)'), self.sendOutputReport)
+            output_thread.connect(output_thread, pyqtSignal('QString', name='output_report'), self.sendOutputReport)
             output_thread.start()
 
         all_finished = False
@@ -119,7 +120,7 @@ class monitoringDlg(QDialog, monitoring.Ui_monitoringDialog):
 
         self.monitoringOkPushButton.setEnabled(True)
 
-        self.emit(SIGNAL('summary_report(QString)'), self.summaryReport)
+        self.emit(pyqtSignal('QString','summary_report'), self.summaryReport)
 
     def update_succ_conn(self):
         """
@@ -137,7 +138,7 @@ class monitoringDlg(QDialog, monitoring.Ui_monitoringDialog):
         """
         Function to send the signal with the name of the output report
         """
-        self.emit(SIGNAL('output_report(QString)'), out_report)
+        self.emit(pyqtSignal('QString', 'output_report'), out_report)
 
     def closeEvent(self, evnt):
         """

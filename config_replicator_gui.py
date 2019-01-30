@@ -1,14 +1,10 @@
 #Importing Python Libraries
 import re
-import ConfigParser
+import configparser
 
-from PyQt4.QtGui import *
-from PyQt4.QtCore import *
-
-
-
-
-
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
 
 
 #Importing Paramiko
@@ -60,7 +56,7 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
             self.alertLabel.hide()
         self.updateUi()
 
-    @pyqtSignature("")
+    @pyqtSlot()
     def on_actionClear_triggered(self):
         """
         Function to run when the Clear Button in the toolbar is pressed
@@ -87,7 +83,7 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
         self.updateUi()
         self.statusbar.showMessage('Al Values Cleared ...', 2000)
 
-    @pyqtSignature("")
+    @pyqtSlot()
     def on_scriptPushButton_clicked(self):
         """
         Function to run when the Load Script button is clicked
@@ -95,35 +91,35 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
         fname = QFileDialog.getOpenFileName(self, 'Open File', directory='scripts/', filter='Script (*.src)')
         if fname != '':
             self.scriptTextEdit.setEnabled(True)
-            filename = re.search('(.*)[\\|\/](.+\.src)', fname).group(2)
-            f = open(fname, 'r')
+            filename = re.search('(.*)[\\|\/](.+\.src)', fname[0]).group(2)
+            f = open(fname[0], 'r')
             self.scriptTextEdit.setPlainText(f.read())
             f.close()
             self.script_selected = True
             self.scriptNameLabel.setText(filename)
-            self.statusbar.showMessage('Selected script %s' % fname, 2000)
-            self.commands = self.getCommands(fname)
+            self.statusbar.showMessage('Selected script {fname}'.format(fname=fname[0]), 2000)
+            self.commands = self.getCommands(fname[0])
 
         self.saveScriptPushButton.setEnabled(False)
         self.updateUi()
 
-    @pyqtSignature("")
+    @pyqtSlot()
     def on_saveScriptPushButton_clicked(self):
         """
         Function to run when the Save Script is clicked
         """
         fname = QFileDialog.getSaveFileName(self, 'Save File', directory='scripts/', filter='Script (*.src)')
         if fname != '':
-            f = open(fname, 'w')
+            f = open(fname[0], 'w')
             f.write(self.scriptTextEdit.toPlainText())
             f.close()
-            filename = re.search('(.*)[\\|\/](.+\.src)', fname).group(2)
+            filename = re.search('(.*)[\\|\/](.+\.src)', fname[0]).group(2)
             self.scriptNameLabel.setText(filename)
             self.saveScriptPushButton.setEnabled(False)
-            self.statusbar.showMessage('Saved script %s' % fname, 2000)
-            self.commands = self.getCommands(fname)
+            self.statusbar.showMessage('Saved script {fname}'.format(fname=fname[0]), 2000)
+            self.commands = self.getCommands(fname[0])
 
-    @pyqtSignature("")
+    @pyqtSlot()
     def on_listPushButton_clicked(self):
         """
         Function to run when the Load Destination List is clicked
@@ -131,19 +127,19 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
         fname = QFileDialog.getOpenFileName(self, 'Open File', directory='lists/', filter='List (*.lst)')
         if fname != '':
             self.listTextEdit.setEnabled(True)
-            filename = re.search('(.*)[\\|\/](.+\.lst)', fname).group(2)
-            f = open(fname, 'r')
+            filename = re.search('(.*)[\\|\/](.+\.lst)', fname[0]).group(2)
+            f = open(fname[0], 'r')
             self.listTextEdit.setPlainText(f.read())
             f.close()
             self.list_selected = True
             self.listNameLabel.setText(filename)
-            self.statusbar.showMessage('Selected List %s' % fname, 2000)
-            self.destinations = self.getDevices(fname)
+            self.statusbar.showMessage('Selected List {fname}'.format(fname=fname[0]), 2000)
+            self.destinations = self.getDevices(fname[0])
 
         self.saveListPushButton.setEnabled(False)
         self.updateUi()
 
-    @pyqtSignature("")
+    @pyqtSlot()
     def on_saveListPushButton_clicked(self):
         """
         Function to run when the Save Destination List is clicked
@@ -159,7 +155,7 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
             self.statusbar.showMessage('Saved Destination List %s' % fname, 2000)
             self.destinations = self.getDevices(fname)
 
-    @pyqtSignature("")
+    @pyqtSlot()
     def on_actionSettings_triggered(self):
         """
         Function to run when the Settings button on the toolbar is pressed
@@ -167,7 +163,7 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
         settings = misc.settingsWindow(self)
         settings.show()
 
-    @pyqtSignature("")
+    @pyqtSlot()
     def on_actionHelp_triggered(self):
         """
         Function to run when the Help button on the toolbar is pressed
@@ -175,7 +171,7 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
         helpbrw = misc.helpWindow(self)
         helpbrw.show()
 
-    @pyqtSignature("")
+    @pyqtSlot()
     def on_actionReports_triggered(self):
         """
         Function to run when the Reports button on the toolbar is pressed
@@ -183,25 +179,25 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
         reports = misc.reportsWindow(self.summaryReport, self.outputReport, self)
         reports.show()
 
-    @pyqtSignature("")
+    @pyqtSlot()
     def on_actionConnect_triggered(self):
         """
         Function to run when the Connect button on the toolbar is pressed
         """
         #Launching Dialog to get the credentials
         credentials = misc.credentialDlg(self)
-        credentials.connect(credentials, SIGNAL("credentials(QString, QString)"), self.get_credentials)
+        credentials.connect(credentials, pyqtSignal('QString', 'QString', name="credentials"), self.get_credentials)
         credentials.exec_()
 
         #Use Enable?
-        configure = ConfigParser.ConfigParser()
+        configure = configparser.ConfigParser()
         configure.read('config.ini')
         use_enable = configure.get('enable', 'use_enable').replace("\'", "").lower()
 
         if use_enable == 'yes':
             #Launching Dialog to get the credentials
             enable_dialog = misc.enableDlg(self)
-            enable_dialog.connect(enable_dialog, SIGNAL("enable(QString)"), self.get_enable)
+            enable_dialog.connect(enable_dialog, pyqtSignal('QString', name="enable"), self.get_enable)
             enable_dialog.exec_()
 
         warning_msg = 'After this screen you will use the credentials entered to send the script \"%s\" to each device saved on the destination list \"%s\", using %i threads.\nDo you Want to Continue?' % (self.scriptNameLabel.text(), self.listNameLabel.text(), self.threadsHorizontalSlider.value())
@@ -219,8 +215,8 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
                                   self.enable_password,
                                   self.output,
                                   self)
-            monit.connect(monit, SIGNAL("summary_report(QString)"), self.getSummaryReport)
-            monit.connect(monit, SIGNAL("output_report(QString)"), self.getOutputReport)
+            monit.connect(monit, pyqtSignal('QString', "summary_report"), self.getSummaryReport)
+            monit.connect(monit, pyqtSignal('QString', "output_report"), self.getOutputReport)
             monit.show()
             monit.exec_()
 
@@ -228,14 +224,14 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
         self.password = ''
         self.enable_password = ''
 
-    @pyqtSignature("")
+    @pyqtSlot()
     def on_scriptTextEdit_textChanged(self):
         """
         Function to run when the script is changed
         """
         self.saveScriptPushButton.setEnabled(True)
 
-    @pyqtSignature("")
+    @pyqtSlot()
     def on_listTextEdit_textChanged(self):
         """
         Function to run when the destination list is changed
