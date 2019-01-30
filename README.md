@@ -17,7 +17,7 @@ This tool was developed in Python 2.7 and the gui is using PyQT4, while telnetli
 devices with telnet and ssh respectively.
 
 ## Pre-Requisites
-If the gui needs to be used PyQT4 should be installed. PyQT4 should be compiled from the sources and can be downloaded from [here](https://www.riverbankcomputing.com/software/pyqt/download)
+If the gui needs to be used PyQT5 should be installed. PyQT4 should be compiled from the sources and can be downloaded from [here](https://www.riverbankcomputing.com/software/pyqt/download)
 Also paramiko should be installed if ssh is needed to connect to the devices, in linux is easy to install the library,
 but in Windows can pose a challenge, Google search can help you to find some information about this.
 
