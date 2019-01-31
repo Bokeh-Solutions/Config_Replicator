@@ -248,7 +248,7 @@ if __name__ == "__main__":
             clear()
 
             #Take input user to take action over list
-            print('The selected script \"%s\" will be send to the destination list \"%s\"' % (resp_script[1], resp_list[1]))
+            print('The selected script \"{}\" will be send to the destination list \"{}\"'.format(resp_script[1], resp_list[1]))
             print('How many threads do you want to have? ')
             threads = input('Enter a number or (R)eturn, (Q)uit: ')
 
