@@ -205,7 +205,7 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
         """
         #Launching Dialog to get the credentials
         credentials = misc.credentialDlg(self)
-        credentials.connect(credentials, pyqtSignal('QString', 'QString', name="credentials"), self.get_credentials)
+        credentials.get_credentials.connect(self.get_credentials)
         credentials.exec_()
 
         #Use Enable?
@@ -216,10 +216,10 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
         if use_enable == 'yes':
             #Launching Dialog to get the credentials
             enable_dialog = misc.enableDlg(self)
-            enable_dialog.connect(enable_dialog, pyqtSignal('QString', name="enable"), self.get_enable)
+            enable_dialog.get_enable.connect(self.get_enable)
             enable_dialog.exec_()
 
-        warning_msg = 'After this screen you will use the credentials entered to send the script \"%s\" to each device saved on the destination list \"%s\", using %i threads.\nDo you Want to Continue?' % (self.scriptNameLabel.text(), self.listNameLabel.text(), self.threadsHorizontalSlider.value())
+        warning_msg = 'After this screen you will use the credentials entered to send the script \"{}\" to each device saved on the destination list \"{}\", using {} threads.\nDo you Want to Continue?'.format(self.scriptNameLabel.text(), self.listNameLabel.text(), self.threadsHorizontalSlider.value())
         resp = QMessageBox.warning(self, 'Warning', warning_msg, QMessageBox.Yes | QMessageBox.No)
 
         if resp == QMessageBox.Yes:
@@ -234,8 +234,8 @@ class configReplicator(QMainWindow, mainwindow.Ui_MainWindow):
                                   self.enable_password,
                                   self.output,
                                   self)
-            monit.connect(monit, pyqtSignal('QString', "summary_report"), self.getSummaryReport)
-            monit.connect(monit, pyqtSignal('QString', "output_report"), self.getOutputReport)
+            monit.getSummaryReport.connect(self.getSummaryReport)
+            monit.getOutputReport.connect(self.getOutputReport)
             monit.show()
             monit.exec_()
 

@@ -16,6 +16,9 @@ class OutputReport (QThread):
 
     lst = Response of the list Menu
     """
+    # Defining Signals
+    sendOutputReport = pyqtSignal('QString', name='output_report')
+
     def __init__(self, q_dest, q_out, script, lst, parent=None):
         """
         Initialization function
@@ -33,31 +36,33 @@ class OutputReport (QThread):
         """
         os.chdir('reports')
         date = datetime.datetime.now()
-        file_name = 'OutputReport%02d%02d%04d%02d%02d.txt' % (date.month, date.day, date.year, date.hour, date.minute)
-        fd = open(file_name, 'w')
-        os.chdir('..')
-        fd.write("""Output Report
+        file_name = 'OutputReport{:02d}{:02d}{:04d}{:02d}{:02d}.txt'.format(date.month, date.day, date.year, date.hour, date.minute)
+        with open(file_name, 'w') as fd:
+            os.chdir('..')
+            fd.write("""Output Report
 =============\n\n""")
-        fd.write("""Information
+            fd.write("""Information
 -----------\n""")
-        fd.write('- **Date:** %s\n' % date.date())
-        fd.write('- **Script:** %s\n' % self.script)
-        fd.write('- **Destination List:** %s\n' % self.lst)
-        fd.write('\n----------\n\n')
-        fd.write("""Output Details
+            fd.write('- **Date:** {}\n'.format(date.date()))
+            fd.write('- **Script:** {}\n'.format(self.script))
+            fd.write('- **Destination List:** {}\n'.format(self.lst))
+            fd.write('\n----------\n\n')
+            fd.write("""Output Details
 --------------\n""")
-        out = ('', '', '')
-        while out[2] != 'finish_task':
-            out = self.q_out.get()
-            if out[2] != 'finish_task':
-                title = '*Device:* %s (%s)\n' % (out[0], out[1])
-                underline = '~' * len(title) + '\n'
-                fd.write(title)
-                fd.write(underline)
-                fd.write(out[2])
-                fd.write('\n\n')
-            self.q_out.task_done()
+            out = ('', '', '')
+            while out[2] != 'finish_task':
+                out = self.q_out.get()
+                if out[2] != 'finish_task':
+                    title = '*Device:* {} ({})\n'.format(out[0], out[1])
+                    underline = '~' * len(title) + '\n'
+                    fd.write(title)
+                    fd.write(underline)
+                    fd.write(out[2])
+                    fd.write('\n\n')
+                    fd.flush()
+                    os.fsync(fd.fileno())
+                self.q_out.task_done()
         fd.close()
-        self.emit(SIGNAL('output_report(QString)'), file_name)
+        self.sendOutputReport.emit(file_name)
         self.finish = True
 

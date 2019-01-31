@@ -91,7 +91,7 @@ class Menu:
             #Adding first element in the first page
             self.__items[1] = [(str(self.__count_items), item, desc)]
         else:
-            last_page = self.__items.keys()[-1]
+            last_page = list(self.__items.keys())[-1]
             if len(self.__items[last_page]) < self.len_page:
                 #Adding elements on the last page
                 self.__items[last_page].append((str(self.__count_items), item, desc))
@@ -123,7 +123,7 @@ class Menu:
         bottom boundaries could change from "solid" lines to "arrows" to indicate that there are more items on previous
         or following pages.
         """
-        last_page = self.__items.keys()[-1]
+        last_page = list(self.__items.keys())[-1]
         total_col = self.__num_col + self.__item_col + self.__desc_col + 2
         print('+' + total_col * '-' + '+')
         #Print Title
@@ -159,16 +159,16 @@ class Menu:
                 print('+' + total_col * '-' + '+')
         #Print Navigation Instructions at the left and current page and total number of pages at the right
         if ((page + 1) in self.__items.keys()) and ((page - 1) in self.__items.keys()):
-            print('n: next p: previous q: quit' + ' ' * (total_col - 27 - 14 + 2) + '#page %02d of %02d' % (
+            print('n: next p: previous q: quit' + ' ' * (total_col - 27 - 14 + 2) + '#page {:02d} of {:02d}'.format(
                 self.curr_page, last_page))
         elif ((page + 1) in self.__items.keys()) and not ((page - 1) in self.__items.keys()):
-            print('n: next q: quit' + ' ' * (total_col - 15 - 14 + 2) + '#page %02d of %02d' % (
+            print('n: next q: quit' + ' ' * (total_col - 15 - 14 + 2) + '#page {:02d} of {:02d}'.format(
                 self.curr_page, last_page))
         elif not ((page + 1) in self.__items.keys()) and ((page - 1) in self.__items.keys()):
-            print('p: previous q: quit' + ' ' * (total_col - 19 - 14 + 2) + '#page %02d of %02d' % (
+            print('p: previous q: quit' + ' ' * (total_col - 19 - 14 + 2) + '#page {:02d} of {:02d}'.format(
                 self.curr_page, last_page))
         else:
-            print('q: quit' + ' ' * (total_col - 7 - 14 + 2) + '#page %02d of %02d' % (self.curr_page, last_page))
+            print('q: quit' + ' ' * (total_col - 7 - 14 + 2) + '#page {:02d} of {:02d}'.format(self.curr_page, last_page))
 
     def __clear(self):
         """

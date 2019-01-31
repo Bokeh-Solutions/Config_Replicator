@@ -61,6 +61,9 @@ class enableDlg(QDialog, enable.Ui_enableDialog):
     """
     Class to create the enable Dialog
     """
+    # Defining Signals
+    get_enable = pyqtSignal('QString', name='enable')
+
     def __init__(self, parent=None):
         super(enableDlg, self).__init__(parent)
         self.setupUi(self)
@@ -70,7 +73,7 @@ class enableDlg(QDialog, enable.Ui_enableDialog):
         """
         Function to run when the Ok Button is clicked
         """
-        self.emit(pyqtSignal('QString', name='enable'), self.enableLineEdit.text())
+        self.get_nable.emit(self.enableLineEdit.text())
 
 
 class settingsWindow(QMainWindow, settingswindow.Ui_SettingsWindow):
@@ -120,6 +123,9 @@ class credentialDlg(QDialog, credentials.Ui_Dialog):
     """
     Class to create the Credential dialog
     """
+    # Defining Signals
+    get_credentials = pyqtSignal('QString', 'QString', name='credentials')
+
     def __init__(self, parent=None):
         super(credentialDlg, self).__init__(parent)
         self.setupUi(self)
@@ -129,4 +135,4 @@ class credentialDlg(QDialog, credentials.Ui_Dialog):
         """
         Function to run when the Ok Button is clicked
         """
-        self.emit(pyqtSignal('QString', 'QString', name='credentials'), self.usernameLineEdit.text(), self.passwordLineEdit.text())
+        self.get_credentials.emit(self.usernameLineEdit.text(), self.passwordLineEdit.text())

@@ -32,27 +32,28 @@ class OutputReport (threading.Thread):
         """
         os.chdir('reports')
         date = datetime.datetime.now()
-        file_name = 'OutputReport%02d%02d%04d%02d%02d.txt' % (date.month, date.day, date.year, date.hour, date.minute)
-        fd = open(file_name, 'w')
-        os.chdir('..')
-        fd.write("""Output Report
+        file_name = 'OutputReport{:02d}{:02d}{:04d}{:02d}{:02d}.txt'.format(date.month, date.day, date.year, date.hour, date.minute)
+        with open(file_name, 'w')as fd:
+            os.chdir('..')
+            fd.write("""Output Report
 =============\n\n""")
-        fd.write("""Information
+            fd.write("""Information
 -----------\n""")
-        fd.write('- **Date:** %s\n' % date.date())
-        fd.write('- **Script:** %s (%s)\n' % (self.script[1], self.script[2]))
-        fd.write('- **Destination List:** %s (%s)\n' % (self.lst[1], self.lst[2]))
-        fd.write('\n----------\n\n')
-        fd.write("""Output Details
+            fd.write('- **Date:** {}\n'.format(date.date()))
+            fd.write('- **Script:** {} ({})\n'.format(self.script[1], self.script[2]))
+            fd.write('- **Destination List:** {} ({})\n'.format(self.lst[1], self.lst[2]))
+            fd.write('\n----------\n\n')
+            fd.write("""Output Details
 --------------\n""")
-        while True:
-            out = self.q_out.get()
-            title = '*Device:* %s (%s)\n' % (out[0], out[1])
-            underline = '~' * len(title) + '\n'
-            fd.write(title)
-            fd.write(underline)
-            fd.write(out[2])
-            fd.write('\n\n')
-            self.q_out.task_done()
+            while True:
+                out = self.q_out.get()
+                title = '*Device:* {} ({})\n'.format(out[0], out[1])
+                underline = '~' * len(title) + '\n'
+                fd.write(title)
+                fd.write(underline)
+                fd.write(out[2])
+                fd.write('\n\n')
+                fd.flush()
+                os.fsync(fd.fileno())
+                self.q_out.task_done()
         fd.close()
-

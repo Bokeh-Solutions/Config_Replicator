@@ -1,4 +1,4 @@
-import ConfigParser
+import configparser
 import threading
 import time
 
@@ -27,7 +27,7 @@ class Progress (threading.Thread):
         """
         Progress printing function
         """
-        config = ConfigParser.ConfigParser()
+        config = configparser.ConfigParser()
 
         #Parse the configuration file
         self.logger.debug('Parsing the configuration file')
@@ -38,7 +38,7 @@ class Progress (threading.Thread):
             time.sleep(interval)
             progress = (1 - (float(self.q_dest.qsize())/self.tot_dev)) * 100
             title = ' Progress:'
-            content = ' Connecting Progress: %.2f%% ' % progress
+            content = ' Connecting Progress: {:.2f}% '.format(progress)
             tot_len = len(content) + 2
             print
             print('+' + '-' * tot_len + '+')

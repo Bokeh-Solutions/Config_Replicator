@@ -34,7 +34,7 @@ class Ui_MainWindow(object):
         self.threadsHorizontalSlider.setAutoFillBackground(False)
         self.threadsHorizontalSlider.setInputMethodHints(QtCore.Qt.ImhNone)
         self.threadsHorizontalSlider.setMinimum(1)
-        self.threadsHorizontalSlider.setMaximum(500)
+        self.threadsHorizontalSlider.setMaximum(100)
         self.threadsHorizontalSlider.setOrientation(QtCore.Qt.Horizontal)
         self.threadsHorizontalSlider.setTickPosition(QtWidgets.QSlider.TicksBothSides)
         self.threadsHorizontalSlider.setTickInterval(50)

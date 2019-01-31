@@ -15,7 +15,7 @@ except ImportError as e:
 There was a problem importing the python library \"Paramiko\" without this library it will not be possible to connect
 to devices using SSH
 """)
-    print('Error: %s' % e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror)
+    print('Error: {}'.format(str(e)) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror)
     print('-' * 70)
     input('Press any key to continue.')
     paramiko_error = True
@@ -104,14 +104,14 @@ class Connection(threading.Thread):
             ip, name, mode = self.q_dest.get()
             #Processing a telnet device
             if mode == 'telnet':
-                self.logger.info('Connecting to ip %s via Telnet' % ip)
+                self.logger.info('Connecting to ip {} via Telnet'.format(ip))
                 try:
                     telnet = telnetlib.Telnet(ip, 23, timeout=telnet_tout)
                 except Exception as e:
-                    self.logger.info('There was a problem connecting to %s with error %s' % (
-                        ip, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                    self.logger.info('There was a problem connecting to {} with error {}'.format(
+                        ip, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     self.q_error.put(
-                        (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     self.q_dest.task_done()
                     continue
 
@@ -126,7 +126,7 @@ class Connection(threading.Thread):
                         continue
                 except Exception as e:
                     self.q_error.put(
-                        (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     self.q_dest.task_done()
                     continue
 
@@ -141,7 +141,7 @@ class Connection(threading.Thread):
                         continue
                 except Exception as e:
                     self.q_error.put(
-                        (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     telnet.close()
                     self.q_dest.task_done()
                     continue
@@ -155,7 +155,7 @@ class Connection(threading.Thread):
                             telnet.write('\n')
                     except Exception as e:
                         self.q_error.put(
-                            (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                            (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         telnet.close()
                         self.q_dest.task_done()
                         continue
@@ -168,7 +168,7 @@ class Connection(threading.Thread):
                             telnet.write('\n')
                     except Exception as e:
                         self.q_error.put(
-                            (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                            (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         telnet.close()
                         self.q_dest.task_done()
                         continue
@@ -205,7 +205,7 @@ class Connection(threading.Thread):
                             continue
                     except Exception as e:
                         self.q_error.put(
-                            (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                            (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         telnet.close()
                         self.q_dest.task_done()
                         continue
@@ -250,8 +250,7 @@ class Connection(threading.Thread):
                                 for err in error_strings:
                                     if re.search(re.compile(err), resp_cmd[2]):
                                         self.q_error.put((ip, name, mode,
-                                                          "There was a problem with the command \"%s\"" % cmd.strip(
-                                                              '\n')))
+                                                          "There was a problem with the command \"{}\"".format(cmd.strip('\n'))))
                                         error = True
                                         break
                                 if error:
@@ -273,7 +272,7 @@ class Connection(threading.Thread):
 
                 except Exception as e:
                     self.q_error.put(
-                        (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     telnet.close()
                     self.q_dest.task_done()
                     continue
@@ -287,7 +286,7 @@ class Connection(threading.Thread):
                         logging.getLogger("paramiko").setLevel(logging.DEBUG)
                         logging.getLogger("paramiko").addHandler(self.handler)
 
-                    self.logger.info('Connecting to ip %s via Ssh' % ip)
+                    self.logger.info('Connecting to ip {} via Ssh'.format(ip))
                     client = paramiko.SSHClient()
                     #Auto accepting ssh key
                     client.set_missing_host_key_policy(paramiko.client.AutoAddPolicy())
@@ -295,10 +294,10 @@ class Connection(threading.Thread):
                     try:
                         client.connect(ip, port=22, username=self.user, password=self.pwd, timeout=ssh_tout)
                     except Exception as e:
-                        self.logger.info('There was a problem connecting to %s with error %s' % (
-                            ip, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                        self.logger.info('There was a problem connecting to {} with error {}'.format(
+                            ip, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         self.q_error.put(
-                            (ip, name, mode, e.message if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+                            (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                         self.q_dest.task_done()
                         continue
 
@@ -310,7 +309,7 @@ class Connection(threading.Thread):
                     enable_ssh = False
                     while True:
                         resp = chan.recv(9999)
-                        buff += resp
+                        buff += resp.decode('utf-8')
                         if re.search(ssh_device_enable_prompt, buff):
                             enable_ssh = True
                             break
@@ -332,7 +331,7 @@ class Connection(threading.Thread):
                         #Capturing response buffer
                         while True:
                             resp = chan.recv(9999)
-                            buff += resp
+                            buff += resp.decode('utf-8')
                             if re.search(ssh_device_prompt, buff):
                                 break
                             for pwd_prompt in password_prompts:
@@ -342,7 +341,7 @@ class Connection(threading.Thread):
                                     #Capturing response buffer
                                     while not re.search(ssh_device_prompt, buff):
                                         resp = chan.recv(9999)
-                                        buff += resp
+                                        buff += resp.decode('utf-8')
                                     break
                             if match:
                                 break
@@ -354,7 +353,7 @@ class Connection(threading.Thread):
                         #Capturing response buffer
                         while not re.search(ssh_device_prompt, buff):
                             resp = chan.recv(9999)
-                            buff += resp
+                            buff += resp.decode('utf-8')
 
                     resp_out = ''
                     #Sending Commands
@@ -364,7 +363,7 @@ class Connection(threading.Thread):
                         #Capturing response buffer
                         while not re.search(ssh_device_prompt, buff):
                             resp = chan.recv(9999)
-                            buff += resp
+                            buff += resp.decode('utf-8')
                         #Creating string with all result commands for output
                         if self.out:
                             resp_out = resp_out + buff + '\n' + '-' * 70 + '\n'
@@ -372,7 +371,7 @@ class Connection(threading.Thread):
                         for err in error_strings:
                             if re.search(re.compile(err), buff):
                                 self.q_error.put(
-                                    (ip, name, mode, "There was a problem with the command \"%s\"" % cmd.strip('\n')))
+                                    (ip, name, mode, "There was a problem with the command \"{}\"".format(cmd.strip('\n'))))
                                 error = True
                                 break
                         if error:
@@ -385,7 +384,7 @@ class Connection(threading.Thread):
                         #Capturing response buffer
                         while not re.search(ssh_device_prompt, buff):
                             resp = chan.recv(9999)
-                            buff += resp
+                            buff += resp.decode('utf-8')
                         self.q_out.put((ip, name, resp_out))
 
                     self.q_succ.put((ip, name))
@@ -393,7 +392,7 @@ class Connection(threading.Thread):
                     self.q_dest.task_done()
                 else:
                     self.logger.info(
-                        'Could not connect to ip %s via Ssh because Paramiko library is not installed' % ip)
+                        'Could not connect to ip {} via Ssh because Paramiko library is not installed'.format(ip))
                     self.q_error.put(
                         (ip, name, mode, "Paramiko library not installed, SSH connections are not possible"))
                     self.q_dest.task_done()
