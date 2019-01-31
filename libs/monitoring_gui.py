@@ -78,7 +78,7 @@ class monitoringDlg(QDialog, monitoring.Ui_monitoringDialog):
             output_thread = out.OutputReport(destination_queue, output_queue, self.monitoringScriptLabel.text(), self.monitoringListLabel.text())
             output_thread.sendOutputReport.connect(self.sendOutputReport)
             output_thread.start()
-            time.sleep(.25)
+            time.sleep(1)
 
         all_finished = False
         begin_time = datetime.datetime.now()
