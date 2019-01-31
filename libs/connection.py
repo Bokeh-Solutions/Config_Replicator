@@ -70,6 +70,7 @@ class Connection(threading.Thread):
         self.logger = logger
         self.handler = handler
 
+
     def run(self):
         """
         Connection Function
@@ -112,6 +113,7 @@ class Connection(threading.Thread):
                         ip, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
                     self.q_error.put(
                         (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+
                     self.q_dest.task_done()
                     continue
 
@@ -127,6 +129,7 @@ class Connection(threading.Thread):
                 except Exception as e:
                     self.q_error.put(
                         (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+
                     self.q_dest.task_done()
                     continue
 
@@ -142,6 +145,7 @@ class Connection(threading.Thread):
                 except Exception as e:
                     self.q_error.put(
                         (ip, name, mode, str(e) if len(e.args) == 1 else 'Error[' + str(e.errno) + '] ' + e.strerror))
+
                     telnet.close()
                     self.q_dest.task_done()
                     continue

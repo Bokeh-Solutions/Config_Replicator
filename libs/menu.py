@@ -60,6 +60,7 @@ class Menu:
         #Counter for menu items
         self.__count_items = 1
 
+
     def change_cols(self, num, item, desc):
         """
         This method is used to change the reserved columns for watch field in the menu
@@ -75,6 +76,7 @@ class Menu:
         self.__num_col = num
         self.__item_col = item
         self.__desc_col = desc
+
 
     #This function fill the __items dictionary to organize everything in pages and items for pages
     def add_item(self, item, desc):
@@ -100,6 +102,7 @@ class Menu:
                 self.__items[last_page + 1] = [(str(self.__count_items), item, desc)]
 
         self.__count_items += 1
+
 
     def print_page(self, page):
         """
@@ -175,6 +178,7 @@ class Menu:
         Method to Clear the terminal window, it should work on linux and windows
         """
         os.system('cls' if os.name == 'nt' else 'clear')
+
 
     def __previous_page(self):
         """
