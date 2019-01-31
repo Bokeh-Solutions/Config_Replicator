@@ -38,7 +38,7 @@ class Progress (threading.Thread):
             time.sleep(interval)
             progress = (1 - (float(self.q_dest.qsize())/self.tot_dev)) * 100
             title = ' Progress:'
-            content = ' Connecting Progress: %.2f%% ' % progress
+            content = ' Connecting Progress: {:.2f}% '.format(progress)
             tot_len = len(content) + 2
             print
             print('+' + '-' * tot_len + '+')
@@ -47,4 +47,3 @@ class Progress (threading.Thread):
             print('+' + '-' * tot_len + '+')
             print
 
-__author__ = 'Miguel Ercolino'

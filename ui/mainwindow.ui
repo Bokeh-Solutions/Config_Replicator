@@ -51,7 +51,7 @@
          <number>1</number>
         </property>
         <property name="maximum">
-         <number>500</number>
+         <number>100</number>
         </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -419,7 +419,7 @@
     <string>Reports</string>
    </property>
    <property name="toolTip">
-    <string>Resports</string>
+    <string>Reports</string>
    </property>
   </action>
   <action name="actionSettings">
@@ -501,8 +501,8 @@
      <y>107</y>
     </hint>
     <hint type="destinationlabel">
-     <x>235</x>
-     <y>102</y>
+     <x>397</x>
+     <y>101</y>
     </hint>
    </hints>
   </connection>

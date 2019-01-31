@@ -173,7 +173,6 @@ class Menu:
         else:
             print('q: quit' + ' ' * (total_col - 7 - 14 + 2) + '#page {:02d} of {:02d}'.format(self.curr_page, last_page))
 
-
     def __clear(self):
         """
         Method to Clear the terminal window, it should work on linux and windows
@@ -255,10 +254,3 @@ class Menu:
         return (self.__items[self.curr_page][int(resp) - (self.len_page * (self.curr_page - 1)) - 1][0],
                 self.__items[self.curr_page][int(resp) - (self.len_page * (self.curr_page - 1)) - 1][1],
                 self.__items[self.curr_page][int(resp) - (self.len_page * (self.curr_page - 1)) - 1][2])
-
-
-__author__ = "Miguel Ercolino"
-__copyright__ = "Copyright 2014"
-__credits__ = ["Miguel Ercolino"]
-__version__ = "1.0.0"
-__maintainer__ = "Miguel Ercolino"

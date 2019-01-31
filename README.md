@@ -17,7 +17,7 @@ This tool was developed in Python 2.7 and the gui is using PyQT4, while telnetli
 devices with telnet and ssh respectively.
 
 ## Pre-Requisites
-If the gui needs to be used PyQT4 should be installed. PyQT4 should be compiled from the sources and can be downloaded from [here](https://www.riverbankcomputing.com/software/pyqt/download)
+If the gui is needed, then PyQT5 should be installed. PyQT5 can be installed easily with "pip install pyqt5"
 Also paramiko should be installed if ssh is needed to connect to the devices, in linux is easy to install the library,
 but in Windows can pose a challenge, Google search can help you to find some information about this.
 
@@ -28,7 +28,7 @@ The process flow is really simple and can be divided in the following steps:
     - Select the script file with the commands to send to the devices
     - Select the list file with the files where the script file need to be sent
     - Specify the number of threads to use, this will speed up the process because it can use the waiting times while 
-    conencting
+    connecting
     or waiting for output from the device efficiently
     - Specify the credentials to use 
     - Wait until the process is complete

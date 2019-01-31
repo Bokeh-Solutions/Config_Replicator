@@ -1,13 +1,14 @@
-from PyQt4.QtGui import *
-from PyQt4.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
 import time
 import datetime
-import Queue
+import queue
 
 from libs import connection_gui as conn
 from libs import summary_report_gui as sr
 from libs import output_report_gui as out
-
+import time
 from ui import monitoring
 
 class monitoringDlg(QDialog, monitoring.Ui_monitoringDialog):
@@ -26,6 +27,11 @@ class monitoringDlg(QDialog, monitoring.Ui_monitoringDialog):
     en_pwd = Enable Password
     out = Boolean to know if there is output
     """
+
+    # Defining Signals
+    getSummaryReport = pyqtSignal('QString', name='summary_report')
+    getOutputReport = pyqtSignal('QString', name='output_report')
+
     def __init__(self, script, list, th_number, com_list, dest_list, user, pwd, en_pwd, out, parent=None):
         super(monitoringDlg, self).__init__(parent)
         self.setupUi(self)
@@ -52,10 +58,10 @@ class monitoringDlg(QDialog, monitoring.Ui_monitoringDialog):
         """
         Function to start the Threads
         """
-        destination_queue = Queue.Queue()
-        err_queue = Queue.Queue()
-        succ_queue = Queue.Queue()
-        output_queue = Queue.Queue()
+        destination_queue = queue.Queue()
+        err_queue = queue.Queue()
+        succ_queue = queue.Queue()
+        output_queue = queue.Queue()
 
         for dest in self.dest_list:
             destination_queue.put(dest)
@@ -63,15 +69,16 @@ class monitoringDlg(QDialog, monitoring.Ui_monitoringDialog):
         for i in range(self.th_number):
             self.thread = conn.connectDevices(destination_queue, err_queue, output_queue, succ_queue, self.user, self.pwd, self.en_pwd, self.com_list, self.out, parent=self)
             self.threads.append(self.thread)
-            self.connect(self.thread, SIGNAL('succ_conn'), self.update_succ_conn)
-            self.connect(self.thread, SIGNAL('err_conn'), self.update_err_conn)
+            self.thread.update_succ_conn.connect(self.update_succ_conn)
+            self.thread.update_err_conn.connect(self.update_err_conn)
             self.thread.start()
 
          #Start an output report thread
         if self.out:
             output_thread = out.OutputReport(destination_queue, output_queue, self.monitoringScriptLabel.text(), self.monitoringListLabel.text())
-            output_thread.connect(output_thread, SIGNAL('output_report(QString)'), self.sendOutputReport)
+            output_thread.sendOutputReport.connect(self.sendOutputReport)
             output_thread.start()
+            time.sleep(.25)
 
         all_finished = False
         begin_time = datetime.datetime.now()
@@ -94,7 +101,7 @@ class monitoringDlg(QDialog, monitoring.Ui_monitoringDialog):
                 if not thread.finish:
                     all_finished = False
 
-            self.elapsedTimeLcdNumber.display('%02d:%02d:%02d' % (diff_hours, diff_minutes, diff_seconds))
+            self.elapsedTimeLcdNumber.display('{:02d}:{:02d}:{:02d}'.format(diff_hours, diff_minutes, diff_seconds))
             self.monitoringProgressBar.setValue(progress)
             self.monitoringProgressLabel.setText(str(progress) + '%')
             QApplication.processEvents()
@@ -119,7 +126,7 @@ class monitoringDlg(QDialog, monitoring.Ui_monitoringDialog):
 
         self.monitoringOkPushButton.setEnabled(True)
 
-        self.emit(SIGNAL('summary_report(QString)'), self.summaryReport)
+        self.getSummaryReport.emit(self.summaryReport)
 
     def update_succ_conn(self):
         """
@@ -137,7 +144,7 @@ class monitoringDlg(QDialog, monitoring.Ui_monitoringDialog):
         """
         Function to send the signal with the name of the output report
         """
-        self.emit(SIGNAL('output_report(QString)'), out_report)
+        self.getOutputReport.emit(out_report)
 
     def closeEvent(self, evnt):
         """
@@ -154,4 +161,3 @@ class monitoringDlg(QDialog, monitoring.Ui_monitoringDialog):
         else:
             evnt.ignore()
 
-__author__ = 'Miguel Ercolino'

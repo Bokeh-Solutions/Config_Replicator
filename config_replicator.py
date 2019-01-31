@@ -381,5 +381,3 @@ destination list \"{}\", using {} threads
 
     logger.info('Finished Connecting, creating Summary Report')
     sr.summary_report(begin_time, end_time, username, resp_script, resp_list, threads, total_devices, err_queue, succ_queue)
-
-    __author__ = 'Miguel Ercolino'
