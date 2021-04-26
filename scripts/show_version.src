@@ -1,5 +1,5 @@
 !Desc: Script to get the version information of the device
 !output
 !
-sh ver
+sh ver | i Version
 !

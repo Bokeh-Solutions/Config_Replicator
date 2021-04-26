@@ -339,24 +339,48 @@ class connectDevices(QThread):
 
                     resp_out = ''
                     #Sending Commands
+                    ml = False
                     for cmd in self.cmd:
-                        chan.send(cmd)
-                        buff = ''
-                        #Capturing response buffer
-                        while not re.search(ssh_device_prompt, buff):
-                            resp = chan.recv(9999)
-                            buff += resp.decode('utf-8')
-                        #Creating string with all result commands for output
-                        if self.out:
-                            resp_out = resp_out + buff + '\n' + '-' * 70 + '\n'
-                        #Checking if there was not error in the command
-                        for err in error_strings:
-                            if re.search(re.compile(err), buff):
-                                self.q_error.put((ip, name, mode, "There was a problem with the command \"{}\"".format(cmd.strip('\n'))))
-                                error = True
+                        # loop to check if cmd is a multiline command
+                        for rgx in multiline:
+                            # Check if it is the first line of a multiline command
+                            first_line = re.search(rgx, cmd)
+                            escape_char = rgx[-2]
+                            if first_line and not ml:
+                                # Check if a multiline command is written in a one line
+                                one_multiline = re.search(rgx + '.+' + escape_char + '$', cmd)
+                                if not one_multiline:
+                                    ml = True
                                 break
-                        if error:
-                            break
+                            else:
+                                # Check if it is the last line of the multiline command
+                                last_line = re.search('.*' + escape_char + '$', cmd)
+                                if last_line and ml:
+                                    ml = False
+                        # If it is a multiline send it without a prompt, if not send it with prompt
+                        if ml:
+                            chan.send(cmd)
+                        else:
+                            # If it is not multiline command then wait for prompt
+                            chan.send(cmd)
+                            buff = ''
+                            # Capturing response buffer
+                            while not re.search(ssh_device_prompt, buff):
+                                resp = chan.recv(9999)
+                                buff += resp.decode('utf-8')
+                            # Creating string with all result commands for output
+                            if self.out:
+                                resp_out = resp_out + buff + '\n' + '-' * 70 + '\n'
+                            # Checking if there was not error in the command
+                            for err in error_strings:
+                                if re.search(re.compile(err), buff):
+                                    self.q_error.put((ip, name, mode,
+                                                      "There was a problem with the command \"{}\"".format(
+                                                          cmd.strip('\n'))))
+                                    error = True
+                                    break
+                            if error:
+                                break
 
                     #Sending a terminal default stop
                     if self.out:
