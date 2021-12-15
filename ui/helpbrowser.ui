@@ -19,13 +19,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QWebView" name="helpWebView">
-      <property name="url">
-       <url>
-        <string>about:blank</string>
-       </url>
-      </property>
-     </widget>
+     <widget class="QWebEngineView" name="helpWebView" native="true"/>
     </item>
    </layout>
   </widget>
@@ -59,9 +53,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QWebView</class>
+   <class>QWebEngineView</class>
    <extends>QWidget</extends>
-   <header>QtWebKitWidgets/QWebView</header>
+   <header>PyQt5.QtWebEngineWidgets</header>
   </customwidget>
  </customwidgets>
  <resources/>
